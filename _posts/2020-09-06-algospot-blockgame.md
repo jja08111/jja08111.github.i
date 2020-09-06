@@ -1,4 +1,4 @@
---
+---
 title: "[Algospot]BLOCKGAME"
 date: 2020-09-06 10:20:00 -0400
 categories: algorithm 
