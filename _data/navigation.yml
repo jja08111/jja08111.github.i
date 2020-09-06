@@ -15,6 +15,8 @@ main:
 docs :
   - title: "Algorithm"
     children:
+      - title: "DP"
+        url: /tags/#dp
       - title: "DFS" 
         url: /tags/#dfs
       - title: "BFS"
