@@ -19,3 +19,5 @@ docs :
         url: /tags/#dfs
       - title: "BFS"
         url: /tags/#bfs
+      - title: "NetworkFlow"
+        url: /tags/#networkflow
