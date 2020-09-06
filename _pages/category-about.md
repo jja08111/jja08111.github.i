@@ -1,9 +1,9 @@
 ---
 title: "About"
-permalink: /categories/about/
-layout: category
+permalink: /about/
+layout: single
 author_profile: true
-taxonomy: algorithm
+taxonomy: about
 excerpt: "**김민성 Minseong Kim**"
 header:
   overlay_image: /assets/images/algorithm-bg.jpg
