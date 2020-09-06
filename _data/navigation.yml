@@ -11,7 +11,9 @@ main:
   # - title: "Sitemap"
   #   url: /sitemap/
 docs :
-  - title: "DFS" 
-    url: /tags/DFS/
-  - title: "BFS"
-    url: /tags/BFS/
+  - title: "Algorithm"
+    children:
+      - title: "DFS" 
+        url: /tags/#DFS
+      - title: "BFS"
+        url: /tags/#BFS
