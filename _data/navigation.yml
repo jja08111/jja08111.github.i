@@ -1,5 +1,7 @@
 # main links
 main:
+  - title: "About"
+    url: /categories/about/
   - title: "Algorithm"
     url: /categories/algorithm/
   # - title: "About"
