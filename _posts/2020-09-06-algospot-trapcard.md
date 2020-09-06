@@ -1,7 +1,7 @@
 ---
 title: "[Algospot]TRAPCARD"
 date: 2020-09-06 10:20:00 -0400
-categories: algorithm algospot
+categories: algorithm-algospot
 comments : true
 ---
 # 해결 
