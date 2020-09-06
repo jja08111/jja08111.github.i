@@ -3,10 +3,10 @@ title: "[Algospot]TRAPCARD"
 date: 2020-09-06 10:20:00 -0400
 categories: 
 - algorithm 
-- algospot
 tags:
+- algospot 
 - networkflow
-- bipartite_matching
+- bipartite_matching 
 comments : true
 ---
 # 해결 
