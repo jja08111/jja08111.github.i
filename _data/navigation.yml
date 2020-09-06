@@ -14,6 +14,6 @@ docs :
   - title: "Algorithm"
     children:
       - title: "DFS" 
-        url: /tags/#DFS
+        url: /tags/#dfs
       - title: "BFS"
-        url: /tags/#BFS
+        url: /tags/#bfs
