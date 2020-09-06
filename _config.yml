@@ -101,7 +101,7 @@ author:
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-   #    url: mailto:jja08111@gmail.com
+      url: mailto:jja08111@gmail.com
    # - label: "Website"
    #   icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
@@ -113,7 +113,7 @@ author:
       # url: "https://facebook.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-   #    url: "https://github.com/jja08111"
+      url: "https://github.com/jja08111"
    # - label: "Instagram"
    #   icon: "fab fa-fw fa-instagram"
       # url: "https://instagram.com/"
@@ -127,9 +127,9 @@ footer:
    # - label: "Facebook"
    #   icon: "fab fa-fw fa-facebook-square"
       # url:
-   # - label: "GitHub"
-   #    icon: "fab fa-fw fa-github"
-   #   url: "https://github.com/jja08111"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/jja08111"
    # - label: "GitLab"
    #   icon: "fab fa-fw fa-gitlab"
       # url:
@@ -290,7 +290,6 @@ defaults:
     values:
       sidebar:
         nav: "docs"
-    
  # _pages
   - scope:
       path: ""
@@ -304,13 +303,3 @@ defaults:
       related: false
       sidebar:
         nav: "docs"
- # - scope:
- #     path: ""
- #     type: pages
- #   values:
- #     layout: splash
- #     author_profile: true
- #     read_time: false
- #     comments: false
- #     share: true
- #     related: false
