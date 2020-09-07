@@ -2,6 +2,7 @@
 title: "저를 소개합니다."
 permalink: /about/
 layout: single
+share: false
 author_profile: true
 taxonomy: about
 # excerpt: "**Minseong Kim**"
