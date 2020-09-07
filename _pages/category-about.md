@@ -11,6 +11,6 @@ header:
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)" 
 ---
 # 김민성 Minseong Kim
-## 알고리즘 해결과 개발에 관심이 있습니다.  
+## 알고리즘과 개발에 관심이 있습니다.  
 ### Career 
   - 한성대학교 재학 (2018 ~ )
