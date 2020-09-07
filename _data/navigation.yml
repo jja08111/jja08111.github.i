@@ -2,8 +2,8 @@
 main:
   - title: "About"
     url: /about/
-  - title: "Algorithm"
-    url: /categories/algorithm/
+  - title: "Categories"
+    url: /categories/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
@@ -14,6 +14,7 @@ main:
   #   url: /sitemap/
 docs :
   - title: "Algorithm"
+    url: /categories/algorithm/
     children:
       - title: "DP"
         url: /tags/#dp
