@@ -74,14 +74,14 @@ int dp(int begin) {
 }
 
 int solution(vector<string> strs, string t) {
-	memset(cache,-1,sizeof(cache));
-	T=t;
+	  memset(cache,-1,sizeof(cache));
+	  T=t;
     n=t.size();
     // 빠른 탐색을 위해 set 사용
-	for(int i=0;i<strs.size();++i)
-	    s.insert(strs[i]);
+	  for(int i=0;i<strs.size();++i)
+        s.insert(strs[i]);
 	    
-	int ret=dp(0);
-	return ret==INF ? -1 : ret;
+    int ret=dp(0);
+    return ret==INF ? -1 : ret;
 }
 ```
