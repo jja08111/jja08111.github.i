@@ -25,9 +25,10 @@ tags:
 
 # 구현 
 이러한 함수를 이용하여 해결하면 아래와 같다. 
-구현 시 문자열이 중복되어 선택될 수 있으니 `begin`에서부터 한 글자씩 더하며 strs에 있는 지 찾았다.  
-이때 strs에 문자열이 있는지 찾는 계산을 `set<string>`을 만들어 빠르게 하였다. 
+구현 시 문자열이 중복되어 선택될 수 있으니 `begin`에서부터 한 글자씩 더하며 strs에 있는 지 찾았다. 
 글자가 존재한다면 다음 인덱스로 넘어가는 식으로 구현했다. 
+이때 strs에 문자열이 있는지 찾는 계산을 `set<string>`을 만들어 빠르게 하였다. 
+
 ```cpp
 #include <iostream>
 #include <string>
@@ -58,7 +59,7 @@ int dp(int begin) {
         return ret;
     
     ret=INF;
-    // 빈 문자열 부터 begin에서 시작하고 end에서 끝나는 글자들을 만들어 본다.
+    // begin에서 시작하고 end에서 끝나는 글자들을 만들어 본다.
     string next="";
     for(int end=begin;end<n;++end) {
         next+=T[end];
