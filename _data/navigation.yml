@@ -21,7 +21,7 @@ docs :
         url: /tags/#dfs
       - title: "BFS"
         url: /tags/#bfs
-      - title: "NetworkFlow"
+      - title: "Network Flow"
         url: /tags/#networkflow
   - title: "PS"
     children:
@@ -31,3 +31,7 @@ docs :
         url: /tags/#programmers
       - title: "Algospot"
         url: /tags/#algospot
+  - title: "Contest"
+    children:
+      - title: "Review"
+        url: /tags/#review 
