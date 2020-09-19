@@ -14,7 +14,6 @@ main:
   #   url: /sitemap/
 docs :
   - title: "Algorithm"
-    url: /categories/algorithm/
     children:
       - title: "DP"
         url: /tags/#dp
