@@ -1,6 +1,6 @@
 ---
 title: "Todo list"
-permalink: /categories/todo
+permalink: /categories/todo/
 layout: single
 share: false
 author_profile: true
