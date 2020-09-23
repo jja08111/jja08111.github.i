@@ -204,7 +204,7 @@ int main()
             int u,v,c,d;
             scanf("%d %d %d %d",&u,&v,&c,&d);
             --u;--v;
-            adj[u].push_back({{d,c},v});
+            adj[u].push_back({ {d,c},v});
         }
         
         int ret=dp(0,0);
@@ -213,7 +213,6 @@ int main()
         else
             cout<<ret<<endl;
     }
-
     return 0;
 }
 ```
