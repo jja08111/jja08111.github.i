@@ -105,7 +105,7 @@ int getMinTime(int start, int target)
                     dist[there][cost]=nextDuration;
                 }
                 dist[there][nextCost]=nextDuration;
-                pq.push({{-nextDuration,-nextCost},there});
+                pq.push({ {-nextDuration,-nextCost},there});
             }
         }
     }
@@ -127,7 +127,7 @@ int main()
             int u,v,c,d;
             scanf("%d %d %d %d",&u,&v,&c,&d);
             --u;--v;
-            adj[u].push_back({{d,c},v});
+            adj[u].push_back({ {d,c},v});
         }
         int ret=getMinTime(0,N-1);
         if(ret!=-1)
