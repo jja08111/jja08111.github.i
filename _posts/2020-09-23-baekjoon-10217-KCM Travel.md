@@ -47,10 +47,10 @@ use_math: true
 - $dist[vertex][cost]$ 
 
 ## 가지치기 
-$dist[vertex][cost]$가 newDuration으로 새로 갱신된 시점에서 $dist[duration][cost+n], \ \ (0<n<limit-cost)$ 인 $dist$ 값 들이 
-newDuration보다 크다면 이 값들이 의미가 없다. 왜냐하면 비용을 더 들여서 이동했는데 소요시간이 더 크기 때문이다. 
-따라서 이 값들을 전부 newDuration으로 초기화 해주면, 다음에 이 정점을 방문하는 의미 없이 큰 소요시간을 가진 정점은 걸러질 것이다.  
-이때 비용을 많이 들인 경로는 소요시간이 더 작을 테니 값들을 하나 씩 초기화 하다가 newDuration보다 작은 값이 발견되면 반복문을 탈출해야 더욱 빠르게 구현할 수 있다. 
+$dist[vertex][cost]$ 가 $newDuration$으로 새로 갱신된 시점에서 $dist[duration][cost+n], \ \ (0<n<limit-cost)$ 인 $dist$ 값 들이 
+$newDuration$보다 크다면 이 값들은 의미가 없다. 왜냐하면 비용을 더 들여서 이동했는데 소요시간이 더 크기 때문이다. 
+따라서 이 값들을 전부 $newDuration$으로 초기화 해주면, 다음에 이 정점을 방문하는 의미 없이 큰 소요시간을 가진 정점은 걸러질 것이다. 
+이때 비용을 많이 들인 경로는 소요시간이 더 작을 테니 값들을 하나 씩 초기화 하다가 $newDuration$보다 작은 값이 발견되면 반복문을 탈출해야 더욱 빠르게 구현할 수 있다. 
 
 ## 구현 
 ```cpp
@@ -140,7 +140,82 @@ int main()
 }
 ```
 
+# 동적 계획법 이용 
+다른 방법으로는 동적 계획법을 이용한 방법이 있다. 모든 경우를 탐색하는데 중복되는 부분을 $cache[][]$ 에 저장하여 빠르게 해결하고 있다.  
+
+이 방법은 위의 방법보다 공간 복잡도가 좋은 대신 시간은 더 걸린다. 가지치기의 위력이 크기 때문이다. 
+```cpp
+#include <iostream>
+#include <vector>
+#include <cstring>
+using namespace std;
+
+const int INF=987654321;
+const int MAX_N=100;
+const int MAX_M=10001;
+
+int N,limit;
+// < <소요 시간, 소요 비용>, 연결된 공항 > 
+vector<pair<pair<int,int>,int> > adj[MAX_N]; 
+int cache[MAX_N][MAX_M];
+
+int dp(int here, int cost)
+{
+    // 비용의 합이 제한을 넘긴 경우 
+    if(cost>limit)
+        return INF;
+    // 목표에 도착한 경우 
+    if(here==N-1)
+        return 0;
+    
+    int& ret=cache[here][cost];
+    if(ret!=-1)
+        return ret;
+    
+    // 모든 연결된 정점을 돌아보며 값을 갱신한다. 
+    ret=INF;
+    for(int i=0;i<adj[here].size();++i)
+    {
+        int there=adj[here][i].second;
+        int duration=adj[here][i].first.first;
+        int nextCost=adj[here][i].first.second+cost;
+        
+        int cand=dp(there,nextCost)+duration;
+        ret=min(ret,cand);
+    }
+    return ret;
+}
+
+int main()
+{
+    int testCase;
+    cin>>testCase;
+    while(testCase--)
+    {
+        int k;
+        cin>>N>>limit>>k;
+        for(int i=0;i<MAX_N;++i)
+            adj[i].clear();
+        memset(cache,-1,sizeof(cache));
+        
+        for(int i=0;i<k;++i)
+        {
+            int u,v,c,d;
+            scanf("%d %d %d %d",&u,&v,&c,&d);
+            --u;--v;
+            adj[u].push_back({{d,c},v});
+        }
+        
+        int ret=dp(0,0);
+        if(ret>=INF || ret==-1)
+            cout<<"Poor KCM"<<endl;
+        else
+            cout<<ret<<endl;
+    }
+
+    return 0;
+}
+```
 ---
 # 참고
-- 시나모온, [백준 - 10217 KCM Travel](https://sina-sina.tistory.com/101), 2020, 
-```
+- 시나모온, [백준 - 10217 KCM Travel](https://sina-sina.tistory.com/101), 2020, Tistory 
