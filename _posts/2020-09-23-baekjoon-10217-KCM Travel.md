@@ -75,7 +75,7 @@ int getMinTime(int start, int target)
     // pq<소요 시간(음수), 소요 비용(음수)>, 공항> >
     priority_queue<pair<pair<int,int>,int> > pq;
     dist[start][0]=0;
-    pq.push({{0,0},start});
+    pq.push({ {0, 0}, start});
     while(!pq.empty())
     {
         int here=pq.top().second;
