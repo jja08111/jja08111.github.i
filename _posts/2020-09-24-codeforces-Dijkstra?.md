@@ -7,6 +7,7 @@ tags:
 - BFS 
 - dijkstra
 use_math: true
+toc: false 
 
 ---
 
