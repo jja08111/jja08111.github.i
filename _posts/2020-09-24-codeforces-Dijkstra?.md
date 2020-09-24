@@ -3,10 +3,11 @@ title: "[codeforces] Dijkstra?"
 date: 2020-09-24 23:00:00 -0400
 categories: algorithm 
 tags:
-- baekjoon 
+- codeforces 
 - BFS 
 - dijkstra
 use_math: true
+
 ---
 
 영어로 된 문제와 친해지기 위해 codeforces의 문제를 풀어봤다. 
