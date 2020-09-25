@@ -10,7 +10,6 @@ use_math: true
 toc: false 
 
 ---
-
 영어로 된 문제와 친해지기 위해 codeforces의 문제를 풀어봤다. 
 1900의 Difficulty를 가진 문제이며 다익스트라의 최단 경로 알고리즘을 이용해 실제 최단 경로를 출력하면 된다. 
 
