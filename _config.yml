@@ -282,6 +282,7 @@ defaults:
       # 우측 목차 활성화 
       toc: true
       toc_sticky: true
+      toc_ads: true # 구글 애드샌스 sidebar 광고 추가
       sidebar: # 좌측 메뉴바 활정화
         nav: "docs"
       # mathjax 활성화 
