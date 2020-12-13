@@ -10,7 +10,7 @@ tags:
 
 Let's make appBar like samsung ONE UI style animation in flutter.
 
-![one_ui_scroll_view_result](assets/images/one_ui_scroll_view_result.gif)
+![one_ui_scroll_view_result](/assets/images/one_ui_scroll_view_result.gif)
 
 # Simple use
 
