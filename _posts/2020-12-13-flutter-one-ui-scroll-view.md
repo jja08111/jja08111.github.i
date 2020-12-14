@@ -52,4 +52,4 @@ You can customize `appBarColor`, `bottomDivider`, `actions`, and also `expandedH
 
 # Github
 
-Welcome to visit [github/one_ui_scroll_view](https://github.com/jja08111/one_ui_scroll_view) that is uploaded whole code. 
+Welcome to visit [github/one_ui_scroll_view](https://github.com/jja08111/one_ui_scroll_view) where is uploaded whole code. 
