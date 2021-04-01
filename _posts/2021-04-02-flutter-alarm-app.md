@@ -11,8 +11,6 @@ tags:
 
 
 
-# Flutter로 알람 앱 기능 구현하기
-
 우리가 흔히 생각하는 알람 앱을 Flutter를 이용하여 만들고 싶었습니다. 알람 시간이 되면 앱이 실행되고 알람 화면이 띄워져 알람이 울리는 것처럼요. 하지만 Flutter로 구현된 알람앱은 흔하지 않았습니다. 다행히 [random-alarm](https://github.com/geisterfurz007/random-alarm)과 같은 좋은 소스를 찾게되어 공유하고자 이 글을 작성했습니다.
 
 
