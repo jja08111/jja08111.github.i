@@ -60,7 +60,7 @@ tags:
 
 1. [android_alarm_manager](https://pub.dev/packages/android_alarm_manager) [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager)
 
-   - 이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. (파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java)
+   - 이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. (파일 위치 예 : `flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java`)
 
      ```java
      // Copyright 2019 The Chromium Authors. All rights reserved.
