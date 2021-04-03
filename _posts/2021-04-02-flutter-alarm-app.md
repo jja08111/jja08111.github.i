@@ -58,8 +58,12 @@ tags:
 
 1. [android_alarm_manager](https://pub.dev/packages/android_alarm_manager) [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager)
 
-   - 이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. (파일 위치 예 : `flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java`)
+   - 이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
 
+     ```
+     파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java
+     ```
+     
      ```java
      // Copyright 2019 The Chromium Authors. All rights reserved.
      // Use of this source code is governed by a BSD-style license that can be
@@ -98,11 +102,11 @@ tags:
          wakeLock.acquire();
          context.startActivity(startIntent);
          AlarmService.enqueueAlarmProcessing(context, intent);
-         wakeLock.release();
+       wakeLock.release();
        }
      }
      ```
-
+     
      이는 [이곳](https://github.com/flutter/flutter/issues/30555#issuecomment-501597824)에서 자세히 볼 수 있습니다.
 
 2. [mobx](https://pub.dev/packages/mobx) [![pub package](https://img.shields.io/pub/v/mobx.svg)](https://pub.dev/packages/mobx)
