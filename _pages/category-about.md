@@ -19,8 +19,8 @@ header:
 
 ### Contact 
 
-- Email | jja08111@gmail.com
-- Github | https://github.com/jja08111
+- Email : jja08111@gmail.com
+- Github : https://github.com/jja08111
 
 
 
