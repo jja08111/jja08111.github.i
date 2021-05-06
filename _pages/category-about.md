@@ -21,6 +21,7 @@ header:
 
 - Email | jja08111@gmail.com
 - Github | [https://github.com/jja08111](https://github.com/jja08111)
+- https://user-images.githubusercontent.com/57604817/117239983-caf8c700-ae6a-11eb-88ec-f456b582d640.png
 
 
 
@@ -28,11 +29,12 @@ header:
 
 ### [꿀밤(Bedtime) App](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app)
 
-![app_preview1](https://play-lh.googleusercontent.com/Kw_cAcsPbim_0Kw0Q_DmNLATKnja6HzaDJ_bNHT7bBKdm4SnGGSGFfFyaTky86x-7kw=w720-h310-rw)![app_preview2](https://play-lh.googleusercontent.com/3leFwdkkyufIO3-EJSmmCM3Q-kj-7eoQwE6TwFXlatpgwlcpSHBJUyrlsQZbcMUhLg=w720-h310-rw)
+<img src="https://user-images.githubusercontent.com/57604817/117240536-fcbe5d80-ae6b-11eb-8a6f-788bb70ea558.png" width="500">
 
-- 수면 알람을 이용해 규칙적인 수면 습관 형성 어플
-- 수면 주기에 맞춰 수면양을 설정 가능
+- 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 어플
+- 수면에 도움이 되는 체크리스트를 통하여 수면의 질 향상
 - 수면을 기록하여 그래프로 확인 
+- 수면 주기에 맞춰 수면양을 설정 가능
 
 ### [time_chart - flutter plugin](https://pub.dev/packages/time_chart)
 
