@@ -21,7 +21,6 @@ header:
 
 - Email | jja08111@gmail.com
 - Github | [https://github.com/jja08111](https://github.com/jja08111)
-- https://user-images.githubusercontent.com/57604817/117239983-caf8c700-ae6a-11eb-88ec-f456b582d640.png
 
 
 
