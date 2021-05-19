@@ -112,13 +112,17 @@ tags:
 
 2. [mobx](https://pub.dev/packages/mobx) [![pub package](https://img.shields.io/pub/v/mobx.svg)](https://pub.dev/packages/mobx)
 
-   - 이 플러그인을 이용하려면 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
+   - 이 플러그인을 이용하려면 클래스를 생성 후 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
 
      `flutter packages pub run build_runner build` 
 
      자세한 정보는 [mobx 페이지](https://mobx.netlify.app/getting-started/)에서 볼수 있습니다.
 
-3. (필수 X) [permission_handler](https://pub.dev/packages/permission_handler) [![pub package](https://img.shields.io/pub/v/permission_handler.svg)](https://pub.dev/packages/permission_handler) 
+3. [shared_preferences](https://pub.dev/packages/shared_preferences) [![pub package](https://img.shields.io/pub/v/shared_preferences.svg)](https://pub.dev/packages/shared_preferences) 
+
+   - 알람 플래그를 형성할 때 이용할 것입니다.
+
+4. (필수 X) [permission_handler](https://pub.dev/packages/permission_handler) [![pub package](https://img.shields.io/pub/v/permission_handler.svg)](https://pub.dev/packages/permission_handler) 
 
    - 앱에서 사용자에게 권한을 요구할때 유용한 플러그인입니다. 
 
@@ -330,7 +334,7 @@ abstract class _AlarmStatus with Store {
 }
 ```
 
-
+위의 코드는 `mobx` 플러그인을 이용하고 있습니다. 따라서 part file을 생성해야 하는데요. 이는 [이곳](https://mobx.netlify.app/getting-started/)을 참고하시기 바랍니다.
 
 ## 3. 메인 화면에서 알람 화면으로 변경
 
