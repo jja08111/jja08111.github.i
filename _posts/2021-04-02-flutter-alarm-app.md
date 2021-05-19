@@ -46,14 +46,14 @@ tags:
 
 # 요구 사항
 
-### 권한 
+## 권한 
 
 안정적으로 알람 앱을 구현하기 위해서는 아래 두 가지의 권한이 필요합니다. 이는 안드로이드 10 이상 버전에는 무조건 허용되어야합니다.
 
 1. 다른 앱 위에 표시(Display over other apps) : 앱이 실행중이 아니거나 백그라운드에서 실행중일때 앱을 최상단에 띄우기 위해 필요합니다.
 2. 배터리 최적화 무시(Ignore battery optimization) : 배터리 최적화 기능 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.
 
-### 플러그인 
+## 플러그인 
 
 필요한 플러그인은 다음과 같습니다.
 
@@ -134,7 +134,7 @@ tags:
 
 ## 1. callback 함수 호출
 
-해당 시간이 되면 `android_alarm_manager`의 `callback`함수가 호출될 것 입니다. 이 함수 내부는 아래와 같습니다.
+해당 시간이 되면 `android_alarm_manager`의 `callback`함수가 호출될 것 입니다. 이 함수 내부는 아래와 같습니다. 이 함수는 클래스 내부인 경우 아래와 같이 정적으로 선언해야 합니다.
 
 ```dart
 static void _callback(int id) {
@@ -142,7 +142,7 @@ static void _callback(int id) {
 }
 ```
 
-저는 `AlarmFlagManager`라는 클래스를 만들어 플래그를 설정하고 지우고 있습니다. 바로 해당 클래스를 보겠습니다.
+함수가 호출되고 플래그를 설정하는 모습입니다. 저는 `AlarmFlagManager`라는 클래스를 만들어 플래그를 설정하고 있습니다. 바로 해당 클래스를 보겠습니다.
 
 ### alarm_flag_manager.dart
 
@@ -180,12 +180,26 @@ class AlarmFlagManager {
 
 ## 2. Polling worker로 Flag 탐색 후 상태변경
 
-알람 플래그를 형성했으니 탐색을 하여 알람이 울린 상태로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
+알람 플래그를 형성했으니 탐색을 하여 **알람이 울린 상태**로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
 
-- 앱을 실행한 후
-- 앱을 종료하지 않고 다시 진입한 후
+- 앱을 실행한 후 -> main.c
+- 앱을 종료하지 않고 다시 진입한 후 -> 어느 화면에서 `WidgetsBindingObserver` 이용
 
 두 번째 경우에 앱이 실행 중일때 알람이 울린 경우도 포함됩니다. 그렇다면 어떻게 위와 같은 사항을 탐색할까요? 바로 앱의 메인 UI에 해당하는 곳에 `WidgetsBindingObserver`를 이용하면 됩니다. 이는 앱이 종료되는지 혹은 다시 진입했는지 등을 관찰하는 클래스라고 생각하시면 됩니다.
+
+탐색이 된 경우 아래의 `AlarmStatus`의 상태를 변경하면 됩니다.
+
+### main.c
+
+```dart
+void main() {
+  ...생략...
+      
+  runApp(MyApp());
+
+  AlarmPollingWorker().createPollingWorker();
+}
+```
 
 ### some_screen.dart
 
@@ -239,6 +253,7 @@ class AlarmPollingWorker {
 
   bool _running = false;
 
+  // 알람 플래그 탐색을 시작한다.
   void createPollingWorker() async {
     if (_running) {
       print('Worker is already running, not creating another one!');
@@ -275,20 +290,6 @@ class AlarmPollingWorker {
 }
 ```
 
-또한 `AlarmPollingWorker().createPollingWorker`함수는 `main`함수 진입시에도 아래와 같이 실행이 필요합니다.
-
-```dart
-void main() {
-  ...생략...
-      
-  runApp(MyApp());
-
-  AlarmPollingWorker().createPollingWorker();
-}
-```
-
-
-
 ### alarm_status.dart
 
 ```dart
@@ -320,7 +321,7 @@ abstract class _AlarmStatus with Store {
     _isFired = true;
   }
 
-  /// 현재 울린 알람의 상태를 클리어한다.
+  // 현재 울린 알람의 상태를 클리어한다.
   @action
   void clear() {
     _isFired = false;
@@ -376,5 +377,5 @@ class _ObserveAlarmState extends State<ObserveAlarm>
 
 # 마치며
 
-이상으로 Flutter로 알람 앱의 기능적인 부분을 구현해봤습니다. 이렇게 해보며 느낀점은 알람 기능 부분만 네이티브로 따로 작성하는게 낫겠다는 생각입니다. 이상으로 긴 글 읽어 주셔서 감사합니다!
+이상으로 Flutter로 알람 앱의 기능적인 부분을 구현해봤습니다. 이렇게 해보며 느낀점은 알람 기능 부분만 네이티브로 따로 작성하는게 낫겠다라는 것입니다. 이상으로 긴 글 읽어 주셔서 감사합니다!
 
