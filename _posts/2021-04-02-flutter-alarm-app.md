@@ -59,7 +59,7 @@ tags:
 
 1. [android_alarm_manager](https://pub.dev/packages/android_alarm_manager) [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager)
 
-   이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
+   알람이 작동할때, 즉 설정한 시간이 되었을 때 앱을 실행하기 위해서는 아래와 같이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
 
    ```
    파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java
@@ -103,7 +103,7 @@ tags:
        wakeLock.acquire();
        context.startActivity(startIntent);
        AlarmService.enqueueAlarmProcessing(context, intent);
-     wakeLock.release();
+     	wakeLock.release();
      }
    }
    ```
