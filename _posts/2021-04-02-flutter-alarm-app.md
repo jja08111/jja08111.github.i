@@ -59,72 +59,72 @@ tags:
 
 1. [android_alarm_manager](https://pub.dev/packages/android_alarm_manager) [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager)
 
-   - 이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
+   이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
 
-     ```
-     파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java
-     ```
-     
-     ```java
-     // Copyright 2019 The Chromium Authors. All rights reserved.
-     // Use of this source code is governed by a BSD-style license that can be
-     // found in the LICENSE file.
-     
-     package io.flutter.plugins.androidalarmmanager;
-     
-     import android.content.BroadcastReceiver;
-     import android.content.Context;
-     import android.content.Intent;
-     import android.os.PowerManager;
-     import android.content.pm.PackageManager;
-     import android.view.WindowManager;
-     
-     public class AlarmBroadcastReceiver extends BroadcastReceiver {
-       private static PowerManager.WakeLock wakeLock;
-     
-       @Override
-       public void onReceive(Context context, Intent intent) {
-         PowerManager powerManager = (PowerManager)
-                 context.getSystemService(Context.POWER_SERVICE);
-         wakeLock = powerManager.newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
-                 PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                 PowerManager.ON_AFTER_RELEASE, "My wakelock");
-     
-         Intent startIntent = context
-                 .getPackageManager()
-                 .getLaunchIntentForPackage(context.getPackageName());
-     
-         startIntent.setFlags(
-                 Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
-                         Intent.FLAG_ACTIVITY_NEW_TASK |
-                         Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-         );
-     
-         wakeLock.acquire();
-         context.startActivity(startIntent);
-         AlarmService.enqueueAlarmProcessing(context, intent);
-       wakeLock.release();
-       }
+   ```
+   파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java
+   ```
+
+   ```java
+   // Copyright 2019 The Chromium Authors. All rights reserved.
+   // Use of this source code is governed by a BSD-style license that can be
+   // found in the LICENSE file.
+   
+   package io.flutter.plugins.androidalarmmanager;
+   
+   import android.content.BroadcastReceiver;
+   import android.content.Context;
+   import android.content.Intent;
+   import android.os.PowerManager;
+   import android.content.pm.PackageManager;
+   import android.view.WindowManager;
+   
+   public class AlarmBroadcastReceiver extends BroadcastReceiver {
+     private static PowerManager.WakeLock wakeLock;
+   
+     @Override
+     public void onReceive(Context context, Intent intent) {
+       PowerManager powerManager = (PowerManager)
+               context.getSystemService(Context.POWER_SERVICE);
+       wakeLock = powerManager.newWakeLock(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
+               PowerManager.ACQUIRE_CAUSES_WAKEUP |
+               PowerManager.ON_AFTER_RELEASE, "My wakelock");
+   
+       Intent startIntent = context
+               .getPackageManager()
+               .getLaunchIntentForPackage(context.getPackageName());
+   
+       startIntent.setFlags(
+               Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+                       Intent.FLAG_ACTIVITY_NEW_TASK |
+                       Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+       );
+   
+       wakeLock.acquire();
+       context.startActivity(startIntent);
+       AlarmService.enqueueAlarmProcessing(context, intent);
+     wakeLock.release();
      }
-     ```
-     
-     이는 [이곳](https://github.com/flutter/flutter/issues/30555#issuecomment-501597824)에서 자세히 볼 수 있습니다.
+   }
+   ```
+
+   이는 [이곳](https://github.com/flutter/flutter/issues/30555#issuecomment-501597824)에서 자세히 볼 수 있습니다.
 
 2. [mobx](https://pub.dev/packages/mobx) [![pub package](https://img.shields.io/pub/v/mobx.svg)](https://pub.dev/packages/mobx)
 
-   - 이 플러그인을 이용하려면 클래스를 생성 후 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
+   이 플러그인을 이용하려면 클래스를 생성 후 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
 
-     `flutter packages pub run build_runner build` 
+   `flutter packages pub run build_runner build` 
 
-     자세한 정보는 [mobx 페이지](https://mobx.netlify.app/getting-started/)에서 볼수 있습니다.
+   자세한 정보는 [mobx 페이지](https://mobx.netlify.app/getting-started/)에서 볼수 있습니다.
 
 3. [shared_preferences](https://pub.dev/packages/shared_preferences) [![pub package](https://img.shields.io/pub/v/shared_preferences.svg)](https://pub.dev/packages/shared_preferences) 
 
-   - 알람 플래그를 형성할 때 이용할 것입니다.
+   알람 플래그를 형성할 때 이용할 것입니다.
 
 4. (필수 X) [permission_handler](https://pub.dev/packages/permission_handler) [![pub package](https://img.shields.io/pub/v/permission_handler.svg)](https://pub.dev/packages/permission_handler) 
 
-   - 앱에서 사용자에게 권한을 요구할때 유용한 플러그인입니다. 
+   앱에서 사용자에게 권한을 요구할때 유용한 플러그인입니다. 
 
    
 
