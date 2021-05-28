@@ -16,6 +16,8 @@ tags:
 
 
 
+
+
 # 해당 기능으로 구현한 앱 미리보기
 
 - [random-alarm](https://github.com/geisterfurz007/random-alarm) - by [**geisterfurz007**](https://github.com/geisterfurz007)
@@ -32,6 +34,8 @@ tags:
 
 
 
+
+
 # 작동 방식 이해
 
 먼저 앱의 알람 기능은 다음과 같은 순서로 작동합니다.
@@ -41,6 +45,8 @@ tags:
 3. 알람 플래그 파일을 생성한다.(`shared_preference`등 이용)
 4. 직접 구현한 `polling_worker`를 이용하여 플래그 파일이 생성되었는지 확인한다.
 5. 플래그 파일이 존재한다면 상태를 변경(`mobx, provider`등 이용)하여 알람 화면을 띄운다.
+
+
 
 
 
@@ -57,7 +63,7 @@ tags:
 
 필요한 플러그인은 다음과 같습니다.
 
-1. [android_alarm_manager](https://pub.dev/packages/android_alarm_manager) [![pub package](https://img.shields.io/pub/v/android_alarm_manager.svg)](https://pub.dev/packages/android_alarm_manager)
+1. [android_alarm_manager_plus](https://pub.dev/packages/android_alarm_manager_plus) [![pub package](https://img.shields.io/pub/v/android_alarm_manager_plus.svg)](https://pub.dev/packages/android_alarm_manager)
 
    알람이 작동할때, 즉 설정한 시간이 되었을 때 앱을 실행하기 위해서는 아래와 같이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
 
@@ -70,7 +76,7 @@ tags:
    // Use of this source code is governed by a BSD-style license that can be
    // found in the LICENSE file.
    
-   package io.flutter.plugins.androidalarmmanager;
+   package dev.fluttercommunity.plus.androidalarmmanager;
    
    import android.content.BroadcastReceiver;
    import android.content.Context;
@@ -103,7 +109,7 @@ tags:
        wakeLock.acquire();
        context.startActivity(startIntent);
        AlarmService.enqueueAlarmProcessing(context, intent);
-     	wakeLock.release();
+       wakeLock.release();
      }
    }
    ```
@@ -129,6 +135,8 @@ tags:
    
 
 이와 같은 준비가 되면 알람 앱을 만들 준비가 끝났습니다. 
+
+
 
 
 
