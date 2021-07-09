@@ -12,15 +12,15 @@ tags:
 
 우리가 흔히 생각하는 알람 앱을 Flutter를 이용하여 만들고 싶었습니다. 알람 시간이 되면 앱이 실행되고 알람 화면이 띄워져 알람이 울리는 것처럼요. 하지만 Flutter로 구현된 알람앱은 흔하지 않았습니다. 다행히 [random-alarm](https://github.com/geisterfurz007/random-alarm)과 같은 좋은 소스를 찾게되어 공유하고자 이 글을 작성했습니다.
 
-**참고** : _이 코드는 **안드로이드에서만 작동**하며 네이티브로 구현하지 않았습니다. 그저 플러터로 알람앱을 흉내 냈다 정도로 읽어주시면 감사하겠습니다. 네이티브로 작성하면 훨씬 빠르고 기본 알람 앱처럼 구동이 될 것입니다. 혹시 해당 오픈소스가 있다면 공유해주세요!_
+**참고1** : _이 코드는 **안드로이드에서만 작동**하며 네이티브로 구현하지 않았습니다. 그저 플러터로 알람앱을 흉내 냈다 정도로 읽어주시면 감사하겠습니다. 네이티브로 작성하면 훨씬 빠르고 기본 알람 앱처럼 구동이 될 것입니다. 혹시 해당 오픈소스가 있다면 공유해주세요!_
+
+**참고2** : *해당 게시글은 **Dart 2.12** 버전을 타겟으로 작성되었습니다.*
 
 
 
+# 미리보기
 
-
-# 해당 기능으로 구현한 앱 미리보기
-
-- [random-alarm](https://github.com/geisterfurz007/random-alarm) - by [**geisterfurz007**](https://github.com/geisterfurz007)
+- [random-alarm](https://github.com/geisterfurz007/random-alarm) - by [**geisterfurz007**](https://github.com/geisterfurz007) (**게시글의 코드와는 약간 다를 수 있습니다.**)
 
   | Main screen                                                  | Edit screen                                                  | Alarm screen                                                 |
   | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -36,7 +36,7 @@ tags:
 
 
 
-# 작동 방식 이해
+# 작동 순서
 
 먼저 앱의 알람 기능은 다음과 같은 순서로 작동합니다.
 
@@ -50,7 +50,7 @@ tags:
 
 
 
-# 요구 사항
+# 요구사항
 
 ## 권한 
 
@@ -68,7 +68,7 @@ tags:
    알람이 작동할때, 즉 설정한 시간이 되었을 때 앱을 실행하기 위해서는 아래와 같이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
 
    ```
-   파일 위치 예 : flutter\.pub-cache\hosted\pub.dartlang.org \android_alarm_manager-0.4.1+6\android\src\main\java\io\flutter\plugins\androidalarmmanager\AlarmBroadcastReceiver.java
+   파일 위치 예 : C:\Users\Name\AppData\Local\Pub\Cache\hosted\pub.dartlang.org\android_alarm_manager_plus-1.0.2\android\src\main\java\dev\fluttercommunity\plus\androidalarmmanager\AlarmBroadcastReceiver.java
    ```
 
    ```java
@@ -142,9 +142,26 @@ tags:
 
 # 기능 구현 
 
-이제 천천히 따라가며 기능을 구현해보겠습니다. 알람을 특정 시간으로 설정했다고 가정하고 시작하겠습니다.
+알람 객체와 리스트를 구현하여 관리한다고 가정하고 기능적인 부분만 다루도록 하겠습니다.
 
-## 1. callback 함수 호출
+## 1. 알람 설정 
+
+먼저 `android_alarm_manager`를 이용하여 목표하는 시간에 알람을 설정합니다. 이때 `alarmClock`을 true로 하여 안드로이드 내부에서 정확한 알람 시계로 작동할 수 있도록 합니다. 그리고 알람 작동시 스마트폰의 화면을 켜기 위해 `wakeup` 또한 true로 설정합니다. 재부팅시 알람이 작동할 수 있도록 `rescheduleOnReboot`도 true로 설정합니다.
+
+```dart
+AndroidAlarmManager.oneShotAt(
+  dateTime,
+  id,
+  _callback,
+  alarmClock: true,
+  wakeup: true,
+  rescheduleOnReboot: true,
+);
+```
+
+
+
+## 2. callback 함수 호출
 
 해당 시간이 되면 `android_alarm_manager`의 `callback`함수가 호출될 것 입니다. 이 함수 내부는 아래와 같습니다. 이 함수는 클래스 내부인 경우 아래와 같이 정적으로 선언해야 합니다.
 
@@ -154,7 +171,9 @@ static void _callback(int id) {
 }
 ```
 
-함수가 호출되고 플래그를 설정하는 모습입니다. 저는 `AlarmFlagManager`라는 클래스를 만들어 플래그를 설정하고 있습니다. 바로 해당 클래스를 보겠습니다.
+함수가 호출되고 플래그를 설정하는 모습입니다. 저는 `AlarmFlagManager`라는 클래스를 만들어 플래그를 설정하고 있습니다. 
+
+해당 클래스를 보겠습니다. 이 클래스는 플래그를 설정하는 함수, 지우는 함수, 현재 울린 알람의 id를 반환하는 함수로 구성되어있습니다.
 
 ### alarm_flag_manager.dart
 
@@ -175,7 +194,7 @@ class AlarmFlagManager {
     await prefs.setInt(_alarmFlagKey, id);
   }
 
-  Future<int> getFiredId() async {
+  Future<int?> getFiredId() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     return prefs.getInt(_alarmFlagKey);
@@ -188,32 +207,31 @@ class AlarmFlagManager {
 }
 ```
 
-이 클래스를 보시면 플래그를 설정하는 함수, 지우는 함수, 현재 울린 알람의 id를 반환하는 함수로 구성되어있습니다.
+## 3. Flag 탐색 후 상태변경
 
-## 2. Polling worker로 Flag 탐색 후 상태변경
+알람 플래그를 형성했으니 `AlarmPollingWorker`로 탐색을 하여 **알람이 울린 상태**로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
 
-알람 플래그를 형성했으니 탐색을 하여 **알람이 울린 상태**로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
+- 앱 실행시 -> 앱의 매인 클래스 진입시
+- 앱을 종료하지 않고 다시 진입한 후 -> 앱 메인 루트 화면에서 `WidgetsBindingObserver` 이용
 
-- 앱을 실행한 후 -> main.c
-- 앱을 종료하지 않고 다시 진입한 후 -> 어느 화면에서 `WidgetsBindingObserver` 이용
-
-두 번째 경우에 앱이 실행 중일때 알람이 울린 경우도 포함됩니다. 그렇다면 어떻게 위와 같은 사항을 탐색할까요? 바로 앱의 메인 UI에 해당하는 곳에 `WidgetsBindingObserver`를 이용하면 됩니다. 이는 앱이 종료되는지 혹은 다시 진입했는지 등을 관찰하는 클래스라고 생각하시면 됩니다.
+두 번째 경우에 앱이 실행 중일때 알람이 울린 경우도 포함됩니다. 그렇다면 어떻게 위와 같은 사항을 탐색할까요? 바로 앱의 메인 UI에 해당하는 곳에 `WidgetsBindingObserver`를 이용하면 됩니다. 이는 앱이 종료되는지 혹은 다시 진입했는지 등 앱의 라이프 사이클을 관찰하는 클래스라고 생각하시면 됩니다.
 
 탐색이 된 경우 아래의 `AlarmStatus`의 상태를 변경하면 됩니다.
 
-### main.c
+### 앱 실행시
 
 ```dart
-void main() {
-  ...생략...
-      
-  runApp(MyApp());
+void main() => runApp(MyApp());
 
-  AlarmPollingWorker().createPollingWorker();
+class MyApp extends StatelessWidget {
+  const MyApp() {
+    AlarmPollingWorker().createPollingWorker();
+  }
+  ...생략
 }
 ```
 
-### some_screen.dart
+### 앱 재진입시
 
 ```dart
 class SomeScreen extends StatefulWidget {
@@ -226,20 +244,20 @@ class _SomeScreenState extends State<ObserveAlarm>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       
-      ...생략...
+      ...생략
             
       case AppLifecycleState.resumed:
         AlarmPollingWorker().createPollingWorker();
@@ -247,7 +265,7 @@ class _SomeScreenState extends State<ObserveAlarm>
     }
   }
   
-  ...생략...
+  ...생략
 }
 ```
 
@@ -267,10 +285,7 @@ class AlarmPollingWorker {
 
   // 알람 플래그 탐색을 시작한다.
   void createPollingWorker() async {
-    if (_running) {
-      print('Worker is already running, not creating another one!');
-      return;
-    }
+    if (_running) return;
 
     _running = true;
     _poller(120).then((callbackAlarmId) async {
@@ -286,9 +301,9 @@ class AlarmPollingWorker {
     });
   }
     
-  // 알람 플래그를 찾은 경우 해당 알람 Id를 반환하고, 플래그가 없는 경우 null을 반환한다.
-  Future<int> _poller(int iterations) async {
-    int alarmId;
+  // 알람 플래그를 찾은 경우 해당 알람의 Id를 반환하고, 플래그가 없는 경우 null을 반환한다.
+  Future<int?> _poller(int iterations) async {
+    int? alarmId;
     int iterator = 0;
 
     await Future.doWhile(() async {
@@ -324,29 +339,27 @@ abstract class _AlarmStatus with Store {
   @computed
   bool get isFired => _isFired;
 
-  int alarmId;
+  int? callbackAlarmId;
 
-  // 알람을 작동시킨다.
   @action
   void fire(int id) {
-    alarmId = id;
+    callbackAlarmId = id;
     _isFired = true;
   }
 
-  // 현재 울린 알람의 상태를 클리어한다.
   @action
   void clear() {
     _isFired = false;
-    alarmId = null;
+    callbackAlarmId = null;
   }
 }
 ```
 
-위의 코드는 `mobx` 플러그인을 이용하고 있습니다. 따라서 part file을 생성해야 하는데요. 이는 [이곳](https://mobx.netlify.app/getting-started/)을 참고하시기 바랍니다.
+*위의 코드는 `mobx` 플러그인을 이용하고 있습니다. 따라서 part file을 생성해야 하는데요. 이는 [이곳](https://mobx.netlify.app/getting-started/)을 참고하시기 바랍니다.*
 
-## 3. 메인 화면에서 알람 화면으로 변경
+## 4. 메인 화면에서 알람 화면으로 변경
 
-이제 상태를 변경하였으니 알람 화면을 보여주면 됩니다. 저는 `observe_alarm`이라는 클래스를 만들어 화면을 분기했습니다. `AlarmStatus().isFired`가 true이면 알람 화면을, 아니면 홈 화면을 보여줍니다. 저는 이곳에서  `WidgetsBindingObserver`를 적용하여 이용했습니다.
+이제 상태를 변경하였으니 알람 화면을 보여주면 됩니다. 저는 `ObserveAlarm`이라는 클래스를 만들어 화면을 분기했습니다. `AlarmStatus().isFired`가 true이면 알람 화면을, 아니면 홈 화면을 보여줍니다. 저는 앞서 소개한  `WidgetsBindingObserver`를 이곳에 적용했습니다.
 
 ### observe_alarm.dart
 
@@ -355,10 +368,9 @@ class ObserveAlarm extends StatefulWidget {
   final Widget child;
 
   ObserveAlarm({
-    Key key,
-    @required this.child,
-  }) :  assert(child != null), 
-        super(key: key);
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   _ObserveAlarmState createState() => _ObserveAlarmState();
@@ -367,7 +379,7 @@ class ObserveAlarm extends StatefulWidget {
 class _ObserveAlarmState extends State<ObserveAlarm>
     with WidgetsBindingObserver {
   
-  ...생략...
+  ...생략
     
   @override
   Widget build(BuildContext context) {
@@ -383,11 +395,22 @@ class _ObserveAlarmState extends State<ObserveAlarm>
 }
 ```
 
-위에서 보이는 `AlarmScreen`, `AlarmList`클래스는 원하시는대로 구현하시면 됩니다. 알람 화면 경우는 진입시 소리와 진동을 더해주면 좋겠죠? 
+위에서 보이는 `AlarmScreen`, `AlarmList`클래스는 원하시는대로 구현하시면 됩니다. 알람 화면 경우는 진입시 소리와 진동을 작동하면 좋겠죠? 
 
 
 
 # 마치며
 
-이상으로 Flutter로 알람 앱의 기능적인 부분을 구현해봤습니다. 이렇게 해보며 느낀점은 알람 기능 부분만 네이티브로 따로 작성하는게 낫겠다라는 것입니다. 이상으로 긴 글 읽어 주셔서 감사합니다!
+추가적으로 알람을 주 단위로 반복하여 설정하는 기능, 알람 다시 울림 기능 등을 구현할 수도 있습니다.
+
+Flutter로 알람 앱의 기본적인 기능을 구현해봤습니다. 알람 기능만 네이티브로 따로 구현하는 것도 좋은 방법이라고 생각합니다. 이상 긴 글 읽어 주셔서 감사합니다!
+
+
+
+
+
+# 업데이트 내역
+
+- 2021-04-02 초기 업로드
+- 2021-07-09 내용 추가, 보완 및 Null-safety 적용
 
