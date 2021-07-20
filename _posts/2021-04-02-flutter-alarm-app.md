@@ -59,6 +59,35 @@ tags:
 1. 다른 앱 위에 표시(Display over other apps) : 앱이 실행중이 아니거나 백그라운드에서 실행중일때 앱을 최상단에 띄우기 위해 필요합니다.
 2. 배터리 최적화 무시(Ignore battery optimization) : 배터리 최적화 기능 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.
 
+
+
+## Android에서 MainActivity 수정
+
+MainActivity에서 `onCreate`함수에 다음과 같이 추가해주세요. 알람 화면이 잠금화면에서 올바르게 나올 수 있도록 코드를 추가하는 것 입니다. 아래의 코드는 코틀린을 기준으로 작성되었습니다.
+
+```kotlin
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+        setShowWhenLocked(true)
+        setTurnScreenOn(true)
+        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+        keyguardManager.requestDismissKeyguard(this, null)
+    } else {
+        this.window.addFlags(
+            WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        )
+    }
+}
+```
+
+
+
+
+
 ## 플러그인 
 
 필요한 플러그인은 다음과 같습니다.
