@@ -132,6 +132,9 @@ override fun onCreate(savedInstanceState: Bundle?) {
            context.startActivity(startIntent);
            AlarmService.enqueueAlarmProcessing(context, intent);
            wakeLock.release();
+           
+           // Close dialogs and window shade, so this is fully visible
+           context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
        }
    }
    ```
