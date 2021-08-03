@@ -10,7 +10,7 @@ tags:
 
 
 
-우리가 흔히 생각하는 알람 앱을 Flutter를 이용하여 만들고 싶었습니다. 알람 시간이 되면 앱이 실행되고 알람 화면이 띄워져 알람이 울리는 것처럼요. 하지만 Flutter로 구현된 알람앱은 흔하지 않았습니다. 다행히 [random-alarm](https://github.com/geisterfurz007/random-alarm)과 같은 좋은 소스를 찾게되어 공유하고자 이 글을 작성했습니다.
+우리가 흔히 생각하는 알람 앱을 Flutter를 이용하여 만들고 싶었습니다. 알람 시간이 되면 앱이 실행되고 알람 화면이 띄워져 알람이 울리는 것처럼요. 하지만 Flutter로 구현된 알람앱은 흔하지 않았습니다. 다행히 [random-alarm](https://github.com/geisterfurz007/random-alarm)과 같은 좋은 소스를 찾게 되었고 많은 수정을 거친 코드를 공유하고자 이 글을 작성했습니다.
 
 **참고1** : _이 코드는 **안드로이드에서만 작동**하며 네이티브로 구현하지 않았습니다. 그저 플러터로 알람앱을 흉내 냈다 정도로 읽어주시면 감사하겠습니다. 네이티브로 작성하면 훨씬 빠르고 기본 알람 앱처럼 구동이 될 것입니다. 혹시 해당 오픈소스가 있다면 공유해주세요!_
 
@@ -41,10 +41,11 @@ tags:
 먼저 앱의 알람 기능은 다음과 같은 순서로 작동합니다.
 
 1. `android_alarm_manager`로 알람을 설정한다.
-2. 알람 시간이 되어 `android_alarm_manager`의 `callback`함수가 호출된다.
-3. 알람 플래그 파일을 생성한다.(`shared_preference`등 이용)
-4. 직접 구현한 `polling_worker`를 이용하여 플래그 파일이 생성되었는지 확인한다.
-5. 플래그 파일이 존재한다면 상태를 변경(`mobx, provider`등 이용)하여 알람 화면을 띄운다.
+2. 알람 시간이 되어 `android_alarm_manager`의 `AlarmBroadcastReceiver.onCreate`함수가 호출된다.
+
+   여기서 `shared_preference`를 이용하여 알람 ID 플래그를 생성하고, 앱을 실행한다.
+4. 앱이 실행되고  `polling_worker`를 이용하여 플래그가 생성되었는지 확인한다.
+5. 플래그가 존재한다면 해당 ID를 이용하여 상태를 변경(`mobx, provider`등 이용)하여 알람 화면을 띄운다.
 
 
 
@@ -54,10 +55,10 @@ tags:
 
 ## 권한 
 
-안정적으로 알람 앱을 구현하기 위해서는 아래 두 가지의 권한이 필요합니다. 이는 안드로이드 10 이상 버전에는 무조건 허용되어야합니다.
+안정적으로 알람 앱을 구현하기 위해서는 아래 두 가지의 권한이 필요합니다. 이는 안드로이드 10 이상에는 무조건 허용되어야합니다.
 
 1. 다른 앱 위에 표시(Display over other apps) : 앱이 실행중이 아니거나 백그라운드에서 실행중일때 앱을 최상단에 띄우기 위해 필요합니다.
-2. 배터리 최적화 무시(Ignore battery optimization) : 배터리 최적화 기능 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.
+2. 배터리 최적화 무시(Ignore battery optimization) : 배터리 최적화 기능(Doze mode) 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.
 
 
 
@@ -88,18 +89,63 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 
 
-## 플러그인 
+## 패키지 
 
-필요한 플러그인은 다음과 같습니다.
+필요한 패키지들은 다음과 같습니다.
 
 1. [android_alarm_manager_plus](https://pub.dev/packages/android_alarm_manager_plus) [![pub package](https://img.shields.io/pub/v/android_alarm_manager_plus.svg)](https://pub.dev/packages/android_alarm_manager)
 
-   알람이 작동할때, 즉 설정한 시간이 되었을 때 앱을 실행하기 위해서는 아래와 같이 플러그인 수정이 필요합니다. 해당 플러그인의 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
+   알람을 설정할때 이용할 플러그인입니다.
 
-   ```
-   파일 위치 예 : C:\Users\Name\AppData\Local\Pub\Cache\hosted\pub.dartlang.org\android_alarm_manager_plus-1.0.2\android\src\main\java\dev\fluttercommunity\plus\androidalarmmanager\AlarmBroadcastReceiver.java
-   ```
+   알람이 작동할때, 즉 목표한 시간이 되었을 때 **플래그 형성 및 앱을 실행**하기 위해서는 **플러그인 수정**이 필요합니다. 제가 folk 해놓은 깃허브를 이용하시거나 해당 플러그인을 다음과 같은 수정을 진행해주세요.
+   
+   ### 이미 수정된 플러그인 이용하기
 
+   ```yaml
+   dependencies:
+     android_alarm_manager_plus:
+       git:
+         url: https://github.com/jja08111/plus_plugins.git
+         path: packages/android_alarm_manager_plus
+   ```
+   
+   ### 직접 수정하기
+   
+   플러그인 1.0.2 버전을 기준으로 설명하겠습니다. 
+   
+   먼저 `AlarmFlagManager.java` 파일을 다음과 같이 새로 생성하세요. 이때 `SharedPreferences`의 put 유형을 `Long`으로 해야 플러터 코드 `int`로 읽어올 수 있는 것에 주의하세요. 
+   
+   `android_alarm_manager_plus` 플러그인을 통해 설정된 알람의 ID를  SharedPreferences를 이용하여 저장하는 것을 볼 수 있습니다. 이 플래그는 Flutter 코드에서 알람을 작동시킬때 사용 할 것입니다.
+   
+   #### AlarmFlagManager.java
+   
+   ```java
+   package dev.fluttercommunity.plus.androidalarmmanager;
+   
+   import android.content.Context;
+   import android.content.Intent;
+   import android.content.SharedPreferences;
+   
+   public class AlarmFlagManager {
+   
+     private static final String FLUTTER_SHARED_PREFERENCE_KEY = "FlutterSharedPreferences";
+     private static final String ALARM_FLAG_KEY = "flutter.alarmFlagKey";
+   
+     static public void set(Context context, Intent intent) {
+       int alarmId = intent.getIntExtra("id", -1);
+   
+       SharedPreferences prefs = context.getSharedPreferences(FLUTTER_SHARED_PREFERENCE_KEY, 0);
+       prefs.edit().putLong(ALARM_FLAG_KEY, alarmId).apply();
+     }
+   }
+   ```
+   
+   그 다음 `AlarmBroadcastReceiver.java`파일을 다음과 같이 수정하세요. 
+   
+   코드에서 플래그를 설정하고 화면을 키고, 앱을 실행하여 최상단으로 띄우는 것을 볼 수 있습니다.
+   
+   #### AlarmBroadcastReceiver.java
+   
    ```java
    package dev.fluttercommunity.plus.androidalarmmanager;
    
@@ -109,41 +155,45 @@ override fun onCreate(savedInstanceState: Bundle?) {
    import android.os.PowerManager;
    
    public class AlarmBroadcastReceiver extends BroadcastReceiver {
-       @Override
-       public void onReceive(Context context, Intent intent) {
-           PowerManager powerManager = (PowerManager)
-                   context.getSystemService(Context.POWER_SERVICE);
-           PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK |
-                   PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                   PowerManager.ON_AFTER_RELEASE, "AlarmBroadcastReceiver:My wakelock");
+     @Override
+     public void onReceive(Context context, Intent intent) {
+       AlarmFlagManager.set(context, intent);
    
-           Intent startIntent = context
-                   .getPackageManager()
-                   .getLaunchIntentForPackage(context.getPackageName());
+       PowerManager powerManager = (PowerManager)
+         context.getSystemService(Context.POWER_SERVICE);
+       PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK |
+         PowerManager.ACQUIRE_CAUSES_WAKEUP |
+         PowerManager.ON_AFTER_RELEASE, "AlarmBroadcastReceiver:My wakelock");
    
-           if (startIntent != null)
-               startIntent.setFlags(
-                       Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
-                               Intent.FLAG_ACTIVITY_NEW_TASK |
-                               Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-               );
+       Intent startIntent = context
+         .getPackageManager()
+         .getLaunchIntentForPackage(context.getPackageName());
    
-           wakeLock.acquire(3 * 60 * 1000L /*3 minutes*/);
-           context.startActivity(startIntent);
-           AlarmService.enqueueAlarmProcessing(context, intent);
-           wakeLock.release();
-           
-           // Close dialogs and window shade, so this is fully visible
-           context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-       }
+       if (startIntent != null)
+         startIntent.setFlags(
+           Intent.FLAG_ACTIVITY_REORDER_TO_FRONT |
+             Intent.FLAG_ACTIVITY_NEW_TASK |
+             Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+         );
+   
+       wakeLock.acquire(3 * 60 * 1000L /*3 minutes*/);
+       context.startActivity(startIntent);
+       AlarmService.enqueueAlarmProcessing(context, intent);
+       wakeLock.release();
+   
+       // Close dialogs and window shade, so this is fully visible
+       context.sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+     }
    }
    ```
    
-   이는 [이곳](https://github.com/flutter/flutter/issues/30555#issuecomment-501597824)에서 자세히 볼 수 있습니다.
+   ### 참고 
+   
+   이 외에도 안정적으로 여러개의 알람을 설정하고 싶다면 [이 커밋](https://github.com/jja08111/plus_plugins/commit/eed4283ca8327b7ef970ab4c63791d7872dcd2d7)을 참고하세요. 가끔 오래된 기기에서 `ConcurrentFatalException`이 발생하는데 이를 방지합니다. 
    
 2. [mobx](https://pub.dev/packages/mobx) [![pub package](https://img.shields.io/pub/v/mobx.svg)](https://pub.dev/packages/mobx)
 
-   이 플러그인을 이용하려면 클래스를 생성 후 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
+   상태관리를 위해 이용합니다. 이 패키지는 클래스를 생성 후 다음과 같은 빌드 코드를 터미널 창에 입력해야합니다.
 
    `flutter packages pub run build_runner build` 
 
@@ -174,31 +224,29 @@ override fun onCreate(savedInstanceState: Bundle?) {
 먼저 `android_alarm_manager`를 이용하여 목표하는 시간에 알람을 설정합니다. 이때 `alarmClock`을 true로 하여 안드로이드 내부에서 정확한 알람 시계로 작동할 수 있도록 합니다. 그리고 알람 작동시 스마트폰의 화면을 켜기 위해 `wakeup` 또한 true로 설정합니다. 재부팅시 알람이 작동할 수 있도록 `rescheduleOnReboot`도 true로 설정합니다.
 
 ```dart
+void emptyCallback() {} // 이 함수는 최상단에 위치해야 한다. 즉 클래스 내부이면 static으로 정의해야 한다.
+
 AndroidAlarmManager.oneShotAt(
   dateTime,
   id,
-  _callback,
+  emptyCallback,
   alarmClock: true,
   wakeup: true,
   rescheduleOnReboot: true,
 );
 ```
 
+위의 `emptyCallback` 함수를 보면 내부에 내용이 없는데요. 이용하지 않을 것이기 때문 알람 설정을 위해 형식적으로 둔 것입니다. 
+
+플러그인의 콜백함수를 이용하지 않고 `AlarmBroadcastReceiver.java`를 이용하여 알람을 작동시키는 이유는 시스템에 의해 Dart 코드가 지연되어 작동할 수 있기 때문입니다. 지연되어 작동하면 알람이 제대로 동작하지 않을 위험성이 커집니다.
 
 
-## 2. callback 함수 호출
 
-해당 시간이 되면 `android_alarm_manager`의 `callback`함수가 호출될 것 입니다. 이 함수 내부는 아래와 같습니다. 이 함수는 클래스 내부인 경우 아래와 같이 정적으로 선언해야 합니다.
+## 2. AlarmBroadcastReceiver.onCreate 호출
 
-```dart
-static void _callback(int id) {
-  AlarmFlagManager().set(id);
-}
-```
+알람 시간이 되면 `AlarmBroadcastReceiver.onCreate`가 실행됩니다. 이때 위에서 설명한대로 플래그가 형성되고 앱이 실행됩니다.
 
-함수가 호출되고 플래그를 설정하는 모습입니다. 저는 `AlarmFlagManager`라는 클래스를 만들어 플래그를 설정하고 있습니다. 
-
-해당 클래스를 보겠습니다. 이 클래스는 플래그를 설정하는 함수, 지우는 함수, 현재 울린 알람의 id를 반환하는 함수로 구성되어있습니다.
+저는 플래그를 확인 및 삭제하는 클래스를 아래와 같이 구현했습니다. 아래에서 `alarmFlagKey`가 위에서 설명한 `flutter.alarmFlagKey`의 뒷부분과 일치하는 것을 볼 수 있습니다. 이 클래스의 사용은 뒤에 설명하겠습니다.
 
 ### alarm_flag_manager.dart
 
@@ -213,11 +261,6 @@ class AlarmFlagManager {
   AlarmFlagManager._();
 
   static const String _alarmFlagKey = "alarmFlagKey";
-
-  Future<void> set(int id) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_alarmFlagKey, id);
-  }
 
   Future<int?> getFiredId() async {
     final prefs = await SharedPreferences.getInstance();
@@ -234,7 +277,7 @@ class AlarmFlagManager {
 
 ## 3. Flag 탐색 후 상태변경
 
-알람 플래그를 형성했으니 `AlarmPollingWorker`로 탐색을 하여 **알람이 울린 상태**로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
+알람 플래그를 형성했으니 `AlarmPollingWorker`로 탐색을 하여 플래그가 있다면 **알람이 울린 상태**로 변경해야합니다. 이때 탐색기는 다음 두 가지 경우에 실행됩니다.
 
 - 앱 실행시 -> 앱의 매인 클래스 진입시
 - 앱을 종료하지 않고 다시 진입한 후 -> 앱 메인 루트 화면에서 `WidgetsBindingObserver` 이용
@@ -246,14 +289,12 @@ class AlarmFlagManager {
 ### 앱 실행시
 
 ```dart
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp() {
+void main() {
+    ...생략
+        
     AlarmPollingWorker().createPollingWorker();
-  }
-  ...생략
-}
+    runApp(MyApp());
+} 
 ```
 
 ### 앱 재진입시
@@ -296,6 +337,8 @@ class _SomeScreenState extends State<ObserveAlarm>
 
 ### alarm_polling_worker.dart
 
+여기서 알람 플래그가 형성되고 삭제되는 것을 볼 수 있습니다.
+
 ```dart
 class AlarmPollingWorker {
   static AlarmPollingWorker _instance = AlarmPollingWorker._();
@@ -313,7 +356,7 @@ class AlarmPollingWorker {
     if (_running) return;
 
     _running = true;
-    _poller(120).then((callbackAlarmId) async {
+    _poller(10).then((callbackAlarmId) async {
       _running = false;
       if (callbackAlarmId != null) {
         final alarmStatus = AlarmStatus();
@@ -380,28 +423,28 @@ abstract class _AlarmStatus with Store {
 }
 ```
 
-*위의 코드는 `mobx` 플러그인을 이용하고 있습니다. 따라서 part file을 생성해야 하는데요. 이는 [이곳](https://mobx.netlify.app/getting-started/)을 참고하시기 바랍니다.*
+(*위의 코드는 `mobx` 플러그인을 이용하고 있습니다. 따라서 part file을 생성해야 하는데요. 이는 [이곳](https://mobx.netlify.app/getting-started/)을 참고하시기 바랍니다.*)
 
 ## 4. 메인 화면에서 알람 화면으로 변경
 
-이제 상태를 변경하였으니 알람 화면을 보여주면 됩니다. 저는 `ObserveAlarm`이라는 클래스를 만들어 화면을 분기했습니다. `AlarmStatus().isFired`가 true이면 알람 화면을, 아니면 홈 화면을 보여줍니다. 저는 앞서 소개한  `WidgetsBindingObserver`를 이곳에 적용했습니다.
+이제 상태를 변경하였으니 알람 화면을 보여주면 됩니다. 저는 `AlarmObserver`라는 클래스를 만들어 화면을 분기했습니다. `AlarmStatus().isFired`가 true이면 알람 화면을, 아니면 홈 화면을 보여줍니다. 저는 앞서 소개한  `WidgetsBindingObserver`를 이곳에 적용했습니다.
 
-### observe_alarm.dart
+### alarm_observer.dart
 
 ```dart
-class ObserveAlarm extends StatefulWidget {
+class AlarmObserver extends StatefulWidget {
   final Widget child;
 
-  ObserveAlarm({
+  AlarmObserver({
     Key? key,
     required this.child,
   }) : super(key: key);
 
   @override
-  _ObserveAlarmState createState() => _ObserveAlarmState();
+  _AlarmObserverState createState() => _AlarmObserverState();
 }
 
-class _ObserveAlarmState extends State<ObserveAlarm>
+class _AlarmObserverState extends State<AlarmObserver>
     with WidgetsBindingObserver {
   
   ...생략
@@ -410,11 +453,15 @@ class _ObserveAlarmState extends State<ObserveAlarm>
   Widget build(BuildContext context) {
     return Observer(builder: (context) {
       AlarmStatus status = AlarmStatus();
-        
+      
+      Widget? alarmScreen;
       if (status.isFired) {
-        return AlarmScreen(alarm: AlarmList().getAlarmFrom(id));
+        alarmScreen = AlarmScreen(alarm: AlarmList().getAlarmFrom(id));
       }
-      return widget.child;
+      return IndexedStack(
+        index: alarmScreen != null ? 0 : 1,
+        children: [alarmScreen ?? Container(), widget.child],
+      );
     });
   }
 }
@@ -434,8 +481,9 @@ Flutter로 알람 앱의 기본적인 기능을 구현해봤습니다. 알람 �
 
 
 
-# 업데이트 내역
+# 수정
 
 - 2021-04-02 초기 업로드
 - 2021-07-09 내용 추가, 보완 및 Null-safety 적용
+- 2021-08-03 `callback`함수 삭제 및 플래그 설정 위치 변경
 
