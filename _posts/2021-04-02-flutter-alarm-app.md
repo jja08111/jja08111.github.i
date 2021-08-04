@@ -337,7 +337,7 @@ class _SomeScreenState extends State<ObserveAlarm>
 
 ### alarm_polling_worker.dart
 
-여기서 알람 플래그가 형성되고 삭제되는 것을 볼 수 있습니다.
+여기서 알람 플래그를 탐색하고 삭제하는 것을 볼 수 있습니다.
 
 ```dart
 class AlarmPollingWorker {
@@ -467,7 +467,7 @@ class _AlarmObserverState extends State<AlarmObserver>
 }
 ```
 
-위에서 보이는 `AlarmScreen`, `AlarmList`클래스는 원하시는대로 구현하시면 됩니다. 알람 화면 경우는 진입시 소리와 진동을 작동하면 좋겠죠? 
+위에서 보이는 `AlarmScreen`, `AlarmList`클래스는 원하시는대로 구현하시면 됩니다. 알람 화면 경우는 진입시 소리 재생과 진동을 넣어주면 좋겠죠? 
 
 
 
