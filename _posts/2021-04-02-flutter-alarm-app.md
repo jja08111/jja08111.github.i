@@ -69,18 +69,22 @@ MainActivity에서 `onCreate`함수에 다음과 같이 추가해주세요. 알�
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
+    
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
         setShowWhenLocked(true)
         setTurnScreenOn(true)
-        val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-        keyguardManager.requestDismissKeyguard(this, null)
+        window.addFlags(WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON)
     } else {
-        this.window.addFlags(
-            WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
-            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
-            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED    // deprecated api 27
+            or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD     // deprecated api 26
+            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON   // deprecated api 27
+            or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
         )
+    }
+    val keyguardMgr = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        keyguardMgr.requestDismissKeyguard(this, null)
     }
 }
 ```
