@@ -11,7 +11,7 @@ tags:
 구글 로그인 기능을 구현하고 테스트를 추가하려 했으나 생각처럼 쉽게 되지 않았다. 
 테스트 하려는 것은 구글로 로그인이 된 경우 홈페이지를 띄우고 아닌 경우는 로그인 페이지를 띄우는지 검증하는 굉장히 간단한 것이었다.
 
-바로 결론으로 말하겠다. 방법은 pub 사이트에 제공된 Mock들을 이용하고 추가로 FireBaseExtended에서 제공하는 [mock 파일](https://github.com/FirebaseExtended/flutterfire/blob/master/packages/firebase_auth/firebase_auth/test/mock.dart)을 
+바로 결론을 말하겠다. 방법은 pub 사이트에 제공된 Mock들(MockFirebaseAuth, MockGoogleSignIn)을 이용하고 추가로 FireBaseExtended에서 제공하는 [mock 파일](https://github.com/FirebaseExtended/flutterfire/blob/master/packages/firebase_auth/firebase_auth/test/mock.dart)을 
 이용하는 것이다.
 
 나의 파이어베이스를 담당하는 provider는 아래와 같다.
