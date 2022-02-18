@@ -1,6 +1,6 @@
 ---
 title: "[Flutter] 한글 어절 단위 줄바꿈"
-date: 2022-01-28 012:50:00 -0400
+date: 2022-01-28 12:50:00 -0400
 categories: flutter
 tags:
   - flutter
