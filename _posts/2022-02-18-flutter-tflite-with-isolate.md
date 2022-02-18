@@ -1,6 +1,6 @@
 ---
 title: "[Flutter] Isolate에서 TfLite 구동하기"
-date: 2022-02-18 23:55:00 -0400
+date: 2022-02-18 16:55:00 -0400
 categories: flutter
 tags:
   - flutter
