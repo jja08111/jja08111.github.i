@@ -1,6 +1,6 @@
 ---
 title: "[Flutter] Isolate에서 TfLite 구동하기"
-date: 2022-02-18 16:55:00 -0400
+date: 2022-02-18 00:20:00 -0400
 categories: flutter
 tags:
   - flutter
@@ -50,7 +50,7 @@ class FoodPredictor extends GetxController {
   // ...
 ```
 
-# Isolate로 향하는 포트 메인 쓰레드로 전달
+# Isolate로 향하는 포트를 메인 쓰레드로 전달
 
 Isolate가 생성되면 `_entryPoint` 함수가 실행된다. 전달받은 메시지를 변수에 넣어주고 `Classifier` 객체를 만들고 있다. 이 객체는 다음에 자세히 설명할 것이다. 그 후 isolate로 향하는 포트를 만든 뒤 리스너를 달아준다. 그리고 메시지로 전달받은 `sendPort`를 이용하여 메인 쓰레드에 isolate로 향하는 포트를 전달한다. 이렇게 하면 메인 쓰레드에서 isolate로 메시지를 전달할 준비는 완료되었다.
 
@@ -198,4 +198,4 @@ MapEntry<String, double> _getTopProbability(Map<String, double> labeledProb) {
 
 # 마치며
 
-이 방법을 통해 기존 20프레임 이하로 곤두박질 치던 성능을 55프레임 이상으로 향상할 수 있었다.
+이 방법을 통해 기존 20프레임 이하로 곤두박질 치던 성능을 50프레임 이상으로 향상할 수 있었다.
