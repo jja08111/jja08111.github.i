@@ -81,7 +81,7 @@ static void _entryPoint(List<Object> data) {
 // ...
 ```
 
-이제 실제로 `FoodPredictor` 객체 외부에서 사용하는 함수를 어떤식으로 작성하는지 보겠다. 먼저 `_mainToIsolateSendPort`가 `null`인 경우 `true`를 반환하도록 예외처리했다. 경우에 따라 `false`로 반환하도록 하는 것이 좋을 수도 있으나 나의 앱은 그렇지 않았다. 그 후 새로운 포트를 만든다. 그리고 음식이 있는지 확인할 이미지의 `Uint8List`를 포트와 함께 isolate에 전달한다. 위의 `_entryPoint`에서 `mainToIsolatePort`의 리스너를 보면 포트와 이미지를 받아 실제 prediction을 하고 있다. predicted된 결과물은 다시 아래의 포트에 등록된 리스너에 전달되어 `Completer`를 종료한다. 이렇게 `isFoodImage`를 호출한 곳에서 비동기로 값을 예측한 받을 수 있다.
+이제 실제로 `FoodPredictor` 객체 외부에서 사용하는 함수를 어떤식으로 작성하는지 보겠다. 먼저 `_mainToIsolateSendPort`가 `null`인 경우 `true`를 반환하도록 예외처리했다. 경우에 따라 `false`로 반환하도록 하는 것이 좋을 수도 있으나 나의 앱은 그렇지 않았다. 그 후 새로운 포트를 만든다. 그리고 음식이 있는지 확인할 이미지의 `Uint8List`를 포트와 함께 isolate에 전달한다. 위의 `_entryPoint`에서 `mainToIsolatePort`의 리스너를 보면 포트와 이미지를 받아 실제 prediction을 하고 있다. predicted된 결과물은 다시 아래의 포트에 등록된 리스너에 전달되어 `Completer`를 종료한다. 이렇게 `isFoodImage`를 호출한 곳에서 비동기로 예측된 값을 받을 수 있다.
 
 ```dart
 // ...
