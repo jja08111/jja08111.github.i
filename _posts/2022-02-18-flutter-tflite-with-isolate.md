@@ -120,7 +120,6 @@ class Classifier {
   final List<int> _inputShape;
   final List<int> _outputShape;
 
-  TensorImage? _inputImage;
   TensorBuffer? _outputBuffer;
 
   final TfLiteType _inputType;
@@ -148,15 +147,15 @@ class Classifier {
     return _outputBuffer != null && _probabilityProcessor != null;
   }
 
-  TensorImage _preProcess() {
-    int cropSize = min(_inputImage!.height, _inputImage!.width);
+  TensorImage _getPreprocessedImage(TensorImage inputImage) {
+    int cropSize = min(inputImage.height, inputImage.width);
     return ImageProcessorBuilder()
         .add(ResizeWithCropOrPadOp(cropSize, cropSize))
         .add(ResizeOp(
             _inputShape[1], _inputShape[2], ResizeMethod.NEAREST_NEIGHBOUR))
         .add(preProcessNormalizeOp)
         .build()
-        .process(_inputImage!);
+        .process(inputImage);
   }
 
   bool predictFood(Image image) {
@@ -164,10 +163,10 @@ class Classifier {
     if (!_isInitialized()) return true;
 
     try {
-      _inputImage = TensorImage(_inputType);
-      _inputImage!.loadImage(image);
-      _inputImage = _preProcess();
-      _interpreter.run(_inputImage!.buffer, _outputBuffer!.getBuffer());
+      final inputImage = _getPreprocessedImage(
+        TensorImage(_inputType)..loadImage(image),
+      );
+      _interpreter.run(inputImage.buffer, _outputBuffer!.getBuffer());
 
       Map<String, double> labeledProb = TensorLabel.fromList(
               _labels, _probabilityProcessor!.process(_outputBuffer))
