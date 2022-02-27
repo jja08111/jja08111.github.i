@@ -42,6 +42,8 @@ header:
 - 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 Flutter 앱
 - Flutter에서 Android에서 동작하는 알람 시스템을 구축한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
 
+## Open Source
+
 ### [time_chart - flutter plugin](https://pub.dev/packages/time_chart)
 
 ![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/weekly_time_chart.gif?raw=true)![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/monthly_time_chart.gif?raw=true)
