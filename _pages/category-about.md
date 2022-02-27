@@ -9,42 +9,46 @@ taxonomy: about
 header:
   overlay_image: /assets/images/algorithm-bg.jpg
   overlay_filter: 0.2
-  caption: "Photo credit: [**Unsplash**](https://unsplash.com)" 
+  caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 ---
+
 ## About Me
-### Introduction 
+
+### Introduction
 
 - 안녕하세요 김민성입니다.
-- 문제 해결의 즐거움을 느끼며 최근에는 Flutter를 공부하고 있습니다.
+- 문제 해결의 즐거움을 느끼며 최근에는 Flutter와 Swift를 공부하고 있습니다.
 
-### Contact 
+### Contact
 
 - Email | jja08111@gmail.com
 - Github | [https://github.com/jja08111](https://github.com/jja08111)
 
-
-
 ## Projects
+
+### [뭐먹을까 App](https://play.google.com/store/apps/details?id=com.foundy.what_should_i_eat)
+
+<img src="https://play-lh.googleusercontent.com/qGAAl6UdgAIPJTLys2tRZ1DWIatBqMyk-SJC8QMRd9IOT1KxAnUGgGAhmvVvGxS6VLM=w416-h235" width="500">
+
+- 친구들과 모였을때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 Flutter 앱
+- 적극적으로 테스트 코드를 작성 (100여개)
+- Tensorflow lite를 이용하여 Naver API에서 얻어온 사진을 [음식, 음식 아님]으로 분류해본 경험
+- 동시에 16개의 이미지를 분류하는 작업 때문에 발생했던 퍼포먼스 문제를 Isolate를 활용하여 20프레임 -> 50프레임으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 
 ### [꿀밤(Bedtime) App](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app)
 
 <img src="https://user-images.githubusercontent.com/57604817/117240536-fcbe5d80-ae6b-11eb-8a6f-788bb70ea558.png" width="500">
 
-- 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 어플
-- 수면에 도움이 되는 체크리스트를 통하여 수면의 질 향상
-- 수면을 기록하여 그래프로 확인 
-- 수면 주기에 맞춰 수면양을 설정 가능
+- 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 Flutter 앱
+- Flutter에서 Android에서 동작하는 알람 시스템을 구축한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
 
 ### [time_chart - flutter plugin](https://pub.dev/packages/time_chart)
 
 ![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/weekly_time_chart.gif?raw=true)![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/monthly_time_chart.gif?raw=true)
 
 - 플러터 플러그인에서 시간을 나타내는 그래프가 없어서 직접 개발
-  - 시간 데이터 리스트를 정렬된 상태로 넣으면 그래프 생성
-  - 좌우로 스크롤 가능 -> 시간에 따라 자동으로 그래프 형태 변화
-  - 주간/월간 보기모드 지원
-  - 시간/양 차트모드 지원
+- 이분탐색을 활용해 1,000개의 데이터도 버거워하던 차트 렌더링 성능을 10,000개 이상의 데이터도 무난히 수용할 수 있도록 개선한 경험
 
 ## Education
 
-  - 한성대학교 재학 ( 2018.03 ~ ) 
+- 한성대학교 재학 ( 2018.03 ~ )
