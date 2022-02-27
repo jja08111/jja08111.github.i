@@ -40,7 +40,7 @@ header:
 <img src="https://user-images.githubusercontent.com/57604817/117240536-fcbe5d80-ae6b-11eb-8a6f-788bb70ea558.png" width="500">
 
 - 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 Flutter 앱
-- Flutter에서 Android에서 동작하는 알람 시스템을 구축한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
+- Flutter를 이용한 Android에서 동작하는 알람 시스템을 구축한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
 
 ## Open Source
 
