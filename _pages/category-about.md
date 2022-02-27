@@ -33,7 +33,7 @@ header:
 - 친구들과 모였을때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 Flutter 앱
 - 적극적으로 테스트 코드를 작성 (100여개)
 - Tensorflow lite를 이용하여 Naver API에서 얻어온 사진을 [음식, 음식 아님]으로 분류해본 경험
-- 동시에 16개의 이미지를 분류하는 작업 때문에 발생했던 퍼포먼스 문제를 Isolate를 활용하여 20프레임 -> 50프레임으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
+- 동시에 16개의 이미지를 분류하는 작업 때문에 발생했던 퍼포먼스 문제를 Isolate를 활용하여 10프레임 -> 50프레임 이상으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 
 ### [꿀밤(Bedtime) App](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app)
 

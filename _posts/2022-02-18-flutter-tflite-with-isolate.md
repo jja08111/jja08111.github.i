@@ -197,4 +197,4 @@ MapEntry<String, double> _getTopProbability(Map<String, double> labeledProb) {
 
 # 마치며
 
-이 방법을 통해 기존 20프레임 이하로 곤두박질 치던 성능을 50프레임 이상으로 향상할 수 있었다.
+이 방법을 통해 기존 10프레임 이하로 곤두박질 치던 성능을 50프레임 이상으로 향상할 수 있었다.
