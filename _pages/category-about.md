@@ -17,7 +17,7 @@ header:
 ### Introduction
 
 - 안녕하세요 김민성입니다.
-- 문제 해결의 즐거움을 느끼며 최근에는 Flutter와 Swift를 공부하고 있습니다.
+- 문제 해결의 즐거움을 느끼며 최근에는 Flutter와 Android를 공부하고 있습니다.
 
 ### Contact
 
