@@ -90,4 +90,4 @@ android {
 
 그 후 성공적으로 테스트를 통과했다.
 
-![result](/assets/images/2022-04-06-11.22.05.png)
+![result](/assets/images/2022-04-06-11.22.05-android-mockk-testing.png)
