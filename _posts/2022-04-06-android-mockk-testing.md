@@ -1,6 +1,6 @@
 ---
 title: "[Android] Mockk를 이용하여 테스트하기"
-date: 2022-04-06 09:20:00 -0400
+date: 2022-04-05 16:20:00 -0400
 categories: android
 tags:
   - android
@@ -22,7 +22,7 @@ dependencies {
 }
 ```
 
-나는 테스트해야 하는 것이 다음과 같았다.
+나는 테스트해야 하는 것이 View model이었는데 다음과 같았다.
 View model에서 스크래핑을 위해 스크래핑 repository의 함수를 호출하고 그 안에서는 `Jsoup.connect()`를 호출한다.
 이때 인터넷 연결이 안되어서 에러를 던지는 경우 UI에 문제가 있음을 보인다.
 이를 테스트 코드로 작성하면 아래와 같다. 함수의 시작 부분의 두 줄에서 mock을 형성하고 있는 것을 볼 수 있다.
