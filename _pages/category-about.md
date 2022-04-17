@@ -32,6 +32,7 @@ header:
 
 - 친구들과 모였을 때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 **Flutter 앱**
 - 적극적으로 **테스트 코드**를 작성 (100여개)
+- CI/CD 적용 
 - **Tensorflow lite**를 이용하여 Naver API에서 얻어온 사진을 [음식, 음식 아님]으로 분류해본 경험
 - 동시에 16개의 이미지를 분류하는 작업 때문에 발생했던 **퍼포먼스 문제**를 **Isolate를 활용**하여 **10프레임 -> 50프레임 이상**으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 
@@ -44,7 +45,7 @@ header:
 
 ## Open Source
 
-### [time_chart - flutter plugin](https://pub.dev/packages/time_chart)
+### [time_chart(Flutter plugin)](https://pub.dev/packages/time_chart)
 
 ![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/weekly_time_chart.gif?raw=true)![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/monthly_time_chart.gif?raw=true)
 
