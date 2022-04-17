@@ -34,30 +34,27 @@ fun showErrorPage_whenInternetIsNotConnected() {
     mockkStatic(Jsoup::class)
     every { Jsoup.connect(URL) } throws InternetNotConnectedException()
 
-    val scaffoldState = createMockScaffoldState()
     val homeViewModel = HomeViewModel(
-        scaffoldState = scaffoldState,
-        searchUrl = URL,
-        coroutineContext = coroutineContext,
+        DailyMenuRepositoryImpl(testUrl = URL),
+        coroutineContext = coroutineContext
     )
 
     composeTestRule.setContent {
-        FakeHomeScreen(homeViewModel = homeViewModel, scaffoldState = scaffoldState)
+        HomeView(homeViewModel = homeViewModel)
     }
 
     runBlocking {
         awaitFrame()
-        homeViewModel.apply {
-            assertEquals(
-                scaffoldState.snackbarHostState.currentSnackbarData != null,
-                true
-            )
-            composeTestRule
-                .onAllNodesWithText("인터넷에 연결되지 않았습니다.")
-                .onFirst()
-                .assertIsDisplayed()
-        }
     }
+
+    assertEquals(
+        homeViewModel.scaffoldState.snackbarHostState.currentSnackbarData != null,
+        true
+    )
+    composeTestRule
+        .onAllNodesWithText("인터넷에 연결할 수 없습니다.")
+        .onFirst()
+        .assertIsDisplayed()
 }
 ```
 
