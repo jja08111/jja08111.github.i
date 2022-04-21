@@ -1,5 +1,5 @@
 ---
-title: "[stackoverflow] 명성(reputation) 1000점 달성 후기"
+title: "[Stackoverflow] 명성(reputation) 1000점 달성 후기"
 date: 2022-04-21 16:20:00 +0900
 categories: stackoverflow
 tags:
