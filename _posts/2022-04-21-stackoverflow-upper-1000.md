@@ -8,7 +8,7 @@ tags:
 
 2022년 4월 21일 오늘, 드디어 스택오버플로우 명성 1000점에 도달하여 후기를 남기려고 한다.
 
-![reputation](../assets/images/reputation.png)
+![reputation](/assets/images/reputation.png)
 
 2020년 11월쯤부터 플러터 공부를 시작했었다. 어플을 만들면서 정말 많이 스택오버플로에서 정보를 얻어갔다.
 
@@ -16,7 +16,7 @@ tags:
 
 아마 대부분 사람들의 스택오버플로 첫 글은 질문일것 같다. 나도 마찬가지였다. 당시 수면 어플인 꿀밤을 개발하면서 시간을 나타내는 차트가 필요했었다. 아무리 찾아도 구현된 패키지를 찾을 수 없어 지푸라기라도 잡는 심정으로 되도 않는 영어를 쓰면서 첫 질문을 올렸다.
 
-![first](../assets/images/first_question.png)
+![first](/assets/images/first_question.png)
 
 이 질문에는 아무 답변도 달리지 않았다. 결국 내가 직접 차트 패키지를 개발하여 문제를 해결했고 스스로 답변을 달아 채택하였다.
 
@@ -25,13 +25,13 @@ tags:
 어느덧 플러터에 익숙해졌을 때 스택오버플로 질문을 보는것에 재미가 들렸다. 최신 글을 보니 생각보다 많은 사람들이 간단한 문제로 질문을 올리고 있었다. 그렇게 답변을 하나씩 달았고 어느덧 처음으로 답변을 채택 받았다.
 아래가 그 답변이다. 질문은 "직접 만든 버튼 위젯의 프레스를 비활성화하기 위해서 어떻게 하느냐"였다. 버튼 위젯은 `onPressed` 함수에 `null`을 전달하면 비활성화 되므로 이를 이용하는 방법을 제안했다.
 
-![answer](../assets/images/first_accepted_answer.png)
+![answer](/assets/images/first_accepted_answer.png)
 
 # Bounty 대박
 
 평소처럼 심심해서 최신 질문 글들을 찾아보던 중 무려 500점 보너스가 걸린 질문을 발견했다. 답변 채택이 15점인것과 비교하면 500점이라는 보너스는 굉장히 큰 점수이다. 질문은 대강 아래와 같이 페인팅을 하고 싶은데 잘 안되고 있다는 것이었다.
 
-![bounty_question](../assets/images/bounty_question.png)
+![bounty_question](/assets/images/bounty_question.png)
 
 이미 답변이 하나가 게시되어 있었으나 나는 질문에 맞는 더 나은 결과를 만들 수 있을 것 같아 답변을 달았다. 수면 차트를 개발하면서 `CustomPaint` 사용에 익숙했던 나는 유사한 `CustomClipper`를 이용하여 쉽게 답변을 게시했다.
 
