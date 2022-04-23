@@ -7,6 +7,8 @@ tags:
   - compose
   - mock
   - test
+header:
+  teaser: assets/images/2022-04-06-11.22.05-android-mockk-testing.png
 ---
 
 mockk를 이용하여 테스트 코드를 만드는 방법을 소개하겠다. 먼저 다음과 같이 의존성을 추가해준다. mockk_version에 최신 버전을 넣어주면 된다.

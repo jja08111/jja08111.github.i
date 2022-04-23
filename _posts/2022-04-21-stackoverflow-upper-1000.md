@@ -4,6 +4,8 @@ date: 2022-04-21 16:20:00 +0900
 categories: stackoverflow
 tags:
   - stackoverflow
+header:
+  teaser: assets/images/reputation.png # 미리보기 사진
 ---
 
 2022년 4월 21일 오늘, 드디어 스택오버플로우 명성 1000점에 도달하여 후기를 남기려고 한다.

@@ -5,6 +5,8 @@ categories: flutter
 tags:
   - flutter
   - korean
+header:
+  teaser: assets/images/korean_word_before.png
 ---
 
 Flutter에서 한글은 영어처럼 어절 단위로 줄바꿈이 되지 않는다. 문제를 해결하기 위해 찾아보니 [word_break_text](https://pub.dev/packages/word_break_text)라는 패키지가 존재했다. 굉장히 간단한 방법으로 문제를 해결하고 있었다.
