@@ -1,9 +1,10 @@
 ---
 title: "[우아한테크캠프 5기] 1차 코딩테스트 후기 및 회고"
 date: 2022-05-08 18:20:00 +0900
-categories: woowa_techcamp
+categories: coding_test
 tags:
   - coding_test
+  - woowa_techcamp
 ---
 
 반복되는 일상에 무료함을 느끼고 있을 무렵 친구에게서 2022년 여름 방학 기간에 진행하는 우아한테크캠프 5기 지원 소식을 들었다.
