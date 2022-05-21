@@ -30,18 +30,19 @@ header:
 
 <img src="https://play-lh.googleusercontent.com/qGAAl6UdgAIPJTLys2tRZ1DWIatBqMyk-SJC8QMRd9IOT1KxAnUGgGAhmvVvGxS6VLM=w416-h235" width="500">
 
-- 친구들과 모였을 때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 **Flutter 앱**
+- 친구들과 모였을 때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 Flutter 앱
 - 적극적으로 **테스트 코드**를 작성 (100여개)
-- CI/CD 적용 
+- CI/CD 적용(Github Action, Fastlane)
 - **Tensorflow lite**를 이용하여 Naver API에서 얻어온 사진을 [음식, 음식 아님]으로 분류해본 경험
-- 동시에 16개의 이미지를 분류하는 작업 때문에 발생했던 **퍼포먼스 문제**를 **Isolate를 활용**하여 **10프레임 -> 50프레임 이상**으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
+- 동시에 최대 16개의 이미지를 분류하는 작업 때문에 발생했던 **퍼포먼스 문제**를 **Isolate를 활용**하여 **10프레임 -> 50프레임 이상**으로 개선한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 
 ### [꿀밤(Bedtime) App](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app)
 
 <img src="https://user-images.githubusercontent.com/57604817/117240536-fcbe5d80-ae6b-11eb-8a6f-788bb70ea558.png" width="500">
 
 - 수면 알람을 이용하여 규칙적인 수면 습관을 형성하는 Flutter 앱
-- Flutter를 이용한 Android에서 동작하는 알람 시스템을 구축한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
+- 수면 체크리스트를 통해 더욱 깊은 수면을 도와줌
+- Android에서 동작하는 Flutter 알람 앱을 개발한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
 
 ## Open Source
 
