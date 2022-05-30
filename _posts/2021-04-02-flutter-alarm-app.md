@@ -14,7 +14,11 @@ tags:
 
 **참고2** : _해당 게시글은 **Dart 2.12** 버전을 타겟으로 작성되었습니다._
 
-# 미리보기
+# 샘플
+
+- [flutter_alarm_app](https://github.com/jja08111/flutter_alarm_app) (**추후에 해당 레파지토리를 기준으로 게시글을 업데이트 할 예정입니다. 현재는 게시글의 코드와 차이가 있습니다.**)
+
+<img src="assets/images/flutter_alarm_app.png" style="zoom:75%;" />
 
 - [random-alarm](https://github.com/geisterfurz007/random-alarm) - by [**geisterfurz007**](https://github.com/geisterfurz007) (**게시글의 코드와는 차이가 있습니다.**)
 
