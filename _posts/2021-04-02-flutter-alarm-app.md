@@ -19,7 +19,7 @@ tags:
 
 - [flutter_alarm_app](https://github.com/jja08111/flutter_alarm_app) (**이 레파지토리를 기준으로 설명합니다.**)
 
-<img src="/assets/images/flutter_alarm_app.png" style="zoom:30%;" />
+  <img src="/assets/images/flutter_alarm_app.png" style="zoom:30%;" />
 
 - [random-alarm](https://github.com/geisterfurz007/random-alarm) - by [**geisterfurz007**](https://github.com/geisterfurz007) (**게시글의 코드와는 차이가 있습니다.**)
 
