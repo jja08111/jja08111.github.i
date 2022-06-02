@@ -47,10 +47,12 @@ tags:
 
 ## 권한
 
-안정적으로 알람 앱을 구현하기 위해서는 아래 두 가지의 권한이 필요합니다. 이는 **안드로이드 10 이상에는 반드시 허용**되어야합니다.
+안정적으로 알람 앱을 구현하기 위해서는 아래 권한이 필요합니다. 이는 **안드로이드 10 이상에는 반드시 허용**되어야합니다.
 
-1. 다른 앱 위에 표시(Display over other apps): 앱이 실행중이 아니거나 백그라운드에서 실행중일때 앱을 최상단에 띄우기 위해 필요합니다.
-2. 배터리 최적화 무시(Ignore battery optimization): 배터리 최적화 기능(Doze mode) 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.
+1. 다른 앱 위에 표시(Display over other apps): 알람이 울렸을 때 앱을 최상단에 띄우기 위해 필요합니다.
+2. ~~배터리 최적화 무시(Ignore battery optimization): 배터리 최적화 기능(Doze mode) 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.~~
+   _이전에는 Dart 콜백 코드에서 알람 플래그를 설정했었습니다(`oneShot` 함수에서의 `callback`을 말함). 이 콜백은 DartBackgroundIsolate에서 동작을 하는데 배터리 최적화 기능으로 인해 딜레이가 있었습니다. 하지만 현재는 Dart 콜백 대신 AlarmBroadcastReceiver에서 플래그를 설정하기 때문에 이 권한이 필요 없다고 판단됩니다._
+   _또한 플러그인에서 내부적으로 setAlarmClock()을 이용하여 알람을 설정하기 때문에 잠자기 모드와 상관이 없다고 보입니다. 추가적인 정보는 [잠자기 모드에 관한 안드로이드 문서](https://developer.android.com/training/monitoring-device-state/doze-standby?hl=ko#restrictions)에서 확인할 수 있습니다._
 
 ## Android에서의 MainActivity.kt 수정
 
@@ -455,3 +457,4 @@ Flutter로 알람 앱의 기본적인 기능을 구현해봤습니다. 알람 �
 - 2021-07-09 내용 추가, 보완 및 Null-safety 적용
 - 2021-08-03 `callback`함수 삭제 및 플래그 설정 위치 변경
 - 2022-05-30 상태관리를 `provider`로 하도록 수정 및 예제 레파지토리 추가
+- 2022-06-02 배터리 최적화 무시 권한 내용 수정
