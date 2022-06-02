@@ -51,7 +51,7 @@ tags:
 
 1. 다른 앱 위에 표시(Display over other apps): 알람이 울렸을 때 앱을 최상단에 띄우기 위해 필요합니다.
 2. ~~배터리 최적화 무시(Ignore battery optimization): 배터리 최적화 기능(Doze mode) 때문에 가끔 알람이 제대로 동작하지 않을 때가 있는데 이를 방지합니다.~~
-   _이전에는 Dart 콜백 코드에서 알람 플래그를 설정했었습니다(`oneShot` 함수에서의 `callback`을 말함). 이 콜백은 DartBackgroundIsolate에서 동작을 하는데 배터리 최적화 기능으로 인해 딜레이가 있었습니다. 하지만 현재는 Dart 콜백 대신 AlarmBroadcastReceiver에서 플래그를 설정하기 때문에 이 권한이 필요 없다고 판단됩니다._
+   _이전에는 Dart 콜백 코드에서 알람 플래그를 설정했었습니다(`oneShot` 함수에서의 `callback`을 말함). 이 콜백은 `JobItentService`에서 `enqueueWork`를 통하여 실행이 되는데, 배터리 최적화 기능(도즈 모드)로 인해 딜레이가 있었습니다. 하지만 현재는 Dart 콜백 대신 AlarmBroadcastReceiver에서 플래그를 설정하기 때문에 이 권한이 필요 없다고 판단됩니다._
    _또한 플러그인에서 내부적으로 setAlarmClock()을 이용하여 알람을 설정하기 때문에 잠자기 모드와 상관이 없다고 보입니다. 추가적인 정보는 [잠자기 모드에 관한 안드로이드 문서](https://developer.android.com/training/monitoring-device-state/doze-standby?hl=ko#restrictions)에서 확인할 수 있습니다._
 
 ## Android에서의 MainActivity.kt 수정
