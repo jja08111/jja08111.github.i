@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 # RadioAdapter.kt
 
-이전에 선택된 항목의 인덱스와 현재 선택된 인덱스의 항목을 저장하고 있다. `radioButton.isChecked = selectedIndex == position`와 `notifyItemChanged`를 이용하는 모습이 중요하다.
+이전에 선택된 항목의 인덱스와 현재 선택된 인덱스의 항목을 저장하고 있다. `radioButton.isChecked = selectedIndex == position`와 `notifyItemChanged`를 이용하는 부분이 중요하다.
 
 ```kotlin
 import android.view.LayoutInflater
