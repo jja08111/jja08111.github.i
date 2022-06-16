@@ -21,7 +21,7 @@ Radio 버튼 묶음을 Recycler view로 만들기 위해 찾아보니 `RadioGrou
 
 특별한 것 없이 `binding`을 이용하는 모습이다.
 
-```kt
+```kotlin
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 이전에 선택된 항목의 인덱스와 현재 선택된 인덱스의 항목을 저장하고 있다. `radioButton.isChecked = selectedIndex == position`와 `notifyItemChanged`를 이용하는 모습이 중요하다.
 
-```kt
+```kotlin
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
