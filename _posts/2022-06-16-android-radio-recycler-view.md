@@ -37,10 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val adapter = RadioAdapter()
         binding.recyclerView.apply {
-            this.adapter = adapter
-            this.layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = RadioAdapter()
+            layoutManager = LinearLayoutManager(this@MainActivity)
         }
     }
 }
