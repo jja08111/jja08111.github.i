@@ -1,6 +1,6 @@
 ---
 title: "[Android] Github action으로 CI 구현하기"
-date: 2022-06-28 8:20:00 -0400
+date: 2022-06-27 20:20:00 -0400
 categories: android
 tags:
   - android
