@@ -118,7 +118,7 @@ jobs:
         run: ./gradlew build
 
   test:
-    name: Tests on Android (API level ${{ matrix.api-level }})
+    name: Tests on Android (API level $\{\{ matrix.api-level \}\})
     runs-on: macos-latest
     strategy:
       matrix:
@@ -140,7 +140,7 @@ jobs:
       - name: Run UI test
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
+          api-level: $\{\{ matrix.api-level \}\}
           arch: x86_64
           script: ./gradlew connectedCheck
 ```
