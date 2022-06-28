@@ -61,10 +61,9 @@ UI 테스트의 경우 `reactivecircus/android-emulator-runner`를 이용하여 
 ```yaml
 
   ...
-test:
 {% raw %}
+test:
   name: Tests on Android (API level ${{ matrix.api-level }})
-{% endraw %}
   runs-on: macos-latest
   strategy:
     matrix:
@@ -89,11 +88,13 @@ test:
         api-level: ${{ matrix.api-level }}
         arch: x86_64
         script: ./gradlew connectedCheck
+{% endraw %}
 ```
 
 위의 모든 코드를 합하면 다음과 같습니다.
 
 ```yaml
+{% raw %}
 name: Android CI
 
 on:
@@ -144,6 +145,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
           script: ./gradlew connectedCheck
+{% endraw %}
 ```
 
 # 삽질
