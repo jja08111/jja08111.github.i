@@ -61,9 +61,10 @@ UI 테스트의 경우 `reactivecircus/android-emulator-runner`를 이용하여 
 ```yaml
 
   ...
-
 test:
+{% raw %}
   name: Tests on Android (API level ${{ matrix.api-level }})
+{% endraw %}
   runs-on: macos-latest
   strategy:
     matrix:
