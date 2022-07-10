@@ -81,7 +81,7 @@ _참고: 만약 api level로 인해 여러개의 theme파일이 있는 경우 `B
 
 ## 동적 사용
 
-`MaterialColors.getColor`를 사용하면 됩니다. `androidx.appcompat.R.attr.colorPrimary`와 같이 `AttrRes`를 전달하면 됩니다.
+[MaterialColors.getColor](https://developer.android.com/reference/com/google/android/material/color/MaterialColors)를 사용하면 됩니다. `androidx.appcompat.R.attr.colorPrimary`와 같이 `AttrRes`를 전달하면 됩니다.
 
 # 마무리
 
