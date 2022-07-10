@@ -1,5 +1,5 @@
 ---
-title: "[Android] Theme color 설정하기(XML)"
+title: "[Android] color theme 설정하기(XML)"
 date: 2022-07-10 19:20:00 +0900
 categories: android
 tags:
@@ -12,7 +12,7 @@ tags:
 
 # 컬러 코드 생성
 
-가장 첫 번째 할일을 앱의 브랜딩 컬러 생성입니다. Material 팀에서 공식으로 지원하는 [Material theme builder](https://material-foundation.github.io/material-theme-builder/)에서 자동으로 색상을 생성할 수 있습니다. 이곳에서 이미지 혹은 특정 색상을 기준으로 색상을 생성하고 Export를 하시면 됩니다. 저는 Android Views(XML) 기준으로 설명하겠습니다. 해당 파일을 열어보면 다음과 같은 파일들이 존재합니다.
+가장 첫 번째 할일은 앱의 브랜딩 컬러 생성입니다. Material 팀에서 공식으로 지원하는 [Material theme builder](https://material-foundation.github.io/material-theme-builder/)에서 자동으로 색상을 생성할 수 있습니다. 이곳에서 이미지 혹은 특정 색상을 기준으로 색상을 생성하고 Export를 하시면 됩니다. 저는 Android Views(XML) 기준으로 설명하겠습니다. 해당 파일을 열어보면 다음과 같은 파일들이 존재합니다.
 
 ```
 README.md
