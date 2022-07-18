@@ -10,7 +10,7 @@ tags:
 
 최근 [한성대 공지 어플](https://github.com/jja08111/HansungNotification)을 개발하면서 공부한 [Clean Architecture](http://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)에 대해 정리하고자 한다.
 
-아키텍처에 관심을 가지게 된 이유는 기존에 앱을 개발하면서 느낀 점이 있기 때문이다. 처음으로 만들었던 [꿀밤 앱](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app&hl=ko&gl=US)이 점점 거대해지고 복잡성은 늘어나며 유지보수가 어려워지고 중구난방의 의존성 때문에 테스트하기도 어려워졌다. 그러던 중 클린 아키텍처로 구현된 [아냥이 어플](https://github.com/juhwankim-dev/pushNotificationApp)을 발견하여 _"이거다!!"_ 싶어 새로 개발하는 앱에 적용하게 되었다.
+아키텍처에 관심을 가지게 된 이유는 기존에 앱을 개발하면서 느낀 점이 있기 때문이다. 처음으로 만들었던 [꿀밤 앱](https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app&hl=ko&gl=US)이 점점 거대해지고 복잡성은 늘어나며 유지보수가 어려워지고 중구난방의 의존성 때문에 테스트하기도 어려워졌다. 그러던 중 클린 아키텍처로 구현된 [아냥이 어플](https://github.com/juhwankim-dev/pushNotificationApp)을 발견하여 _"이거다!!"_ 싶어 새로 개발하는 앱에 적용하게 되었다.(아냥이 앱은 모듈을 나누지는 않았다. 개인적으로 진행한 프로젝트는 모듈까지 나누어 관리했다.)
 
 시작하기 전 핵심을 말하자면 클린 아키텍처는 **관심사의 분리**를 통해 UI, DB, Framework간의 결합도를 낮추고 유지 보수하기 좋으며, 테스트하기 용이한 아키텍처이다.
 
@@ -51,7 +51,7 @@ DB, UI가 수정된다고 하여도 이 계층에 영향을 미치지 않을 것
 data 모듈은 DB, 서버와 같이 데이터 소스를 다루는 코드가 존재한다. 예를 들면 retrofit을 이용하여 API와 통신한 뒤 데이터를 받아 적절히 변환하여 데이터를 반환한다.
 
 그런데 곧 설명할 `:presentation` 모듈에서 `:data` 모듈을 직접 참조하지 않고 어떻게 접근이 가능한 것일까? 이에 대한 답은 앞서 보인 모듈 의존 그림을 통해 알 수 있다. 바로 DIP(의존성 역전 원칙)을 이용하는 것이다.
-간단히 설명하자면 `:domain` 모듈에서 인터페이스를 만들고 `:data` 모듈에서는 해당 인터페이스를 구현한 객체를 만들면 되는 것이다. 그리고 `:presentation` 모듈에서는 Hilt등을 활용하여 `:domain` 모듈에 위치한 인터페이스의 의존성 주입을 받으면 된다.
+간단히 설명하자면 `:domain` 모듈에서 인터페이스를 만들고 `:data` 모듈에서는 해당 인터페이스를 구현한 객체를 만들면 되는 것이다. 그리고 `:presentation` 모듈에서는 Hilt등을 활용하여 `:domain` 모듈에 위치한 UseCase를 의존성 주입을 통해 얻으면 된다.
 
 # :presentation 모듈
 
