@@ -33,7 +33,7 @@ header:
 - 모바일에서 학교 공지사항을 편하게 볼 수 있는 Android 앱
 - 키워드를 등록하여 공지 알림을 받을 수 있음
 - [Clean Architecture](https://jja08111.github.io/android/android-clean-architecture/), MVVM 패턴 적용
-- CI 적용(App build, Unit test, Espresso test)
+- [CI 적용(App build, Unit test, Espresso test)](https://jja08111.github.io/android/android-ci-with-github-action/)
 - [Repository Link](https://github.com/jja08111/HansungNotification)
 
 ### [뭐먹을까 App](https://play.google.com/store/apps/details?id=com.foundy.what_should_i_eat)
