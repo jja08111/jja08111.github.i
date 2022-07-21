@@ -1,5 +1,5 @@
 ---
-title: "[Android] Github action으로 CI 구현하기"
+title: "[Android] Github action으로 CI 구축하기"
 date: 2022-06-27 20:20:00 -0400
 categories: android
 tags:
@@ -14,7 +14,7 @@ tags:
 
 - Gradle build
 - Unit test
-- UI test
+- UI test(Espresso)
 
 # 구현
 
