@@ -16,7 +16,7 @@ tags:
 해당 파일에 아래와 같이 API 키 값을 추가해주자.
 
 ```properties
-api_key=https://111.123.111/
+api_key="https://111.123.111/"
 ```
 
 # build.gradle 수정
