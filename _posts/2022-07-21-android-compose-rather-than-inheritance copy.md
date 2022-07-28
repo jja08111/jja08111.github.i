@@ -15,7 +15,7 @@ tags:
 이 파일은 안드로이드 스튜디오에서 자동으로 생성되며 `.gitignore`에 명시된 파일이다. 이것을 이용할 것이다(따로 `apikey.properties`와 같이 생성해서 이용해도 상관없다).
 해당 파일에 아래와 같이 API 키 값을 추가해주자.
 
-```yml
+```properties
 api_key=https://111.123.111/
 ```
 
