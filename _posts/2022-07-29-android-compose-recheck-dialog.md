@@ -121,7 +121,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 <br>
 
-# Compose의 NavController 이용
+## Compose의 NavController 이용
 
 간단히 `NavController`의 `navigateUp`를 전달하면 됩니다.
 
