@@ -50,6 +50,29 @@ fun RecheckHandler(
         enabledAlertDialog = true
     }
 }
+
+@Composable
+fun RecheckDialog(onOkClick: () -> Unit, onDismissRequest: () -> Unit) {
+    AlertDialog(
+        title = {
+            Text(text = stringResource(R.string.recheck_dialog_title))
+        },
+        text = {
+            Text(text = stringResource(R.string.recheck_dialog_text))
+        },
+        onDismissRequest = onDismissRequest,
+        dismissButton = {
+            TextButton(onClick = onDismissRequest) {
+                Text(stringResource(R.string.cancel))
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onOkClick) {
+                Text(stringResource(R.string.ok))
+            }
+        }
+    )
+}
 ```
 
 <br>
@@ -76,6 +99,8 @@ fun RecheckHandler(
         enabledAlertDialog = true
     }
 }
+
+...
 ```
 
 <br>
