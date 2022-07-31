@@ -9,7 +9,7 @@ tags:
 
 어느 화면에서 뒤로가기 버튼을 눌렀을 때 다이어로그를 띄워 한 번 더 확인하는 것을 compose에서 구현하고 싶었습니다. 구현한 결과물을 먼저 보이겠습니다.
 
-<img src="https://camo.githubusercontent.com/df94efe7668dea52e33e31febc43ad189f551b1ae11c2ba9d489999c8a0a38fe/68747470733a2f2f696d352e657a6769662e636f6d2f746d702f657a6769662d352d306539636432353136342e676966" alt="preview" width="400"/>
+<img src="https://user-images.githubusercontent.com/57604817/182040106-9bd7b74b-6179-4423-9073-d0280bda3522.gif" alt="preview" width="400"/>
 
 이는 사용자가 게시글을 수정하는 등의 작업을 할 때 실수로 뒤로가기 버튼을 눌러 작성한 내용을 잃지 않도록 하기 위한 방법입니다.
 
