@@ -37,17 +37,17 @@ fun RecheckHandler(
 fun RecheckHandler(
     enableRechecking: Boolean = true
 ) {
-    var enabledAlertDialog by remember { mutableStateOf(false) }
+    var showAlertDialog by remember { mutableStateOf(false) }
 
-    if (enabledAlertDialog) {
+    if (showAlertDialog) {
         RecheckDialog(
-            onDismissRequest = { enabledAlertDialog = false },
+            onDismissRequest = { showAlertDialog = false },
             onOkClick = { /* TODO implement */ }
         )
     }
 
     BackHandler(enableRechecking) {
-        enabledAlertDialog = true
+        showAlertDialog = true
     }
 }
 
@@ -86,17 +86,17 @@ fun RecheckHandler(
     navigateUp: () -> Unit,
     enableRechecking: Boolean = true
 ) {
-    var enabledAlertDialog by remember { mutableStateOf(false) }
+    var showAlertDialog by remember { mutableStateOf(false) }
 
-    if (enabledAlertDialog) {
+    if (showAlertDialog) {
         RecheckDialog(
-            onDismissRequest = { enabledAlertDialog = false },
+            onDismissRequest = { showAlertDialog = false },
             onOkClick = { navigateUp() }
         )
     }
 
     BackHandler(enableRechecking) {
-        enabledAlertDialog = true
+        showAlertDialog = true
     }
 }
 
