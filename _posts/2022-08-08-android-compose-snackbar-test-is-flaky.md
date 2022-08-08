@@ -14,7 +14,7 @@ tags:
 
 ![action_failure](https://user-images.githubusercontent.com/57604817/183372648-1cf050bc-94c3-4127-bc99-531f9d78358b.png)
 
-안드로이드 팀은 테스트에 실패하면 PR을 머지할 수 없도록 했기 때문에 다시 테스트를 돌리는 등 불안정한 테스트 코드는 상당히 거슬리는 문제였다.
+안드로이드 팀은 테스트에 실패하면 PR을 머지할 수 없도록 했다. 그렇기 때문에 불안정한 테스트 때문에 실패하는 경우 다시 테스트를 돌리고 끝나기를 기다려야한다. 이는 상당히 거슬리는 문제였다.
 
 **환경**
 
@@ -142,8 +142,6 @@ fun showSnackBar_WhenClickButton() {
 ![after1](https://user-images.githubusercontent.com/57604817/183372712-42259d7a-aca0-4963-996d-2e018a974f9f.png)
 ![after2](https://user-images.githubusercontent.com/57604817/183372719-ba61adcc-576b-4451-bf1f-1f8ac626e2c9.png)
 ![after3](https://user-images.githubusercontent.com/57604817/183372724-c8c66f77-0590-45a6-a71b-7d0dd37c511a.png)
-
-<br>
 
 그런데 스낵바를 확인하는 테스트가 여러 곳에 존재했다. 반복되는 코드를 줄이기 위해 아래와 같이 extension을 만들어 사용했다.
 
