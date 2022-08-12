@@ -258,8 +258,8 @@ Auth가 준비된다는 것의 의미는 세션 토큰의 유효성 검증이 �
 
 스플래시 스크린을 지연하는 방법은 [구글의 splash screen 공식 문서](https://developer.android.com/guide/topics/ui/splash-screen#suspend-drawing)에 잘 설명되어있다.
 
-아래는 이를 구현한 것이다. [뷰모델의 UiState가 변경되면 화면을 갱신하는 패턴](https://developer.android.com/jetpack/guide/ui-layer?hl=ko)을 사용하고 있다. Auth가 준비되면 `viewModel.fetchCurrentUser`가 호출되고 스플래시 화면은 종료된다.
-만약 로그인이 되었다면 `navigateToHomeActivity`를 호출하여 홈화면으로 전환한다.
+아래는 이를 구현한 것이다. [뷰모델의 UiState가 변경되면 화면을 갱신하는 패턴](https://developer.android.com/jetpack/guide/ui-layer?hl=ko)을 사용하고 있다. Auth가 준비되면 viewModel 내부에서 `hideSplashScreen`가 `false`로 수정되고 스플래시 화면은 종료된다.
+만약 uiState가 업데이트되었을 때 로그인 되어있는 상태라면 `navigateToHomeActivity`를 호출하여 홈화면으로 전환한다.
 
 **LoginActivity.kt**
 
@@ -285,10 +285,9 @@ private fun showSplashUntilAuthIsReady() {
     content.viewTreeObserver.addOnPreDrawListener(
         object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
-                val isAuthReady = viewModel.uiState.value.isAuthReady
+                val hideSplashScreen = viewModel.uiState.value.hideSplashScreen
 
-                return if (isAuthReady) {
-                    viewModel.fetchCurrentUser()
+                return if (hideSplashScreen) {
                     content.viewTreeObserver.removeOnPreDrawListener(this)
                     true
                 } else {
@@ -310,6 +309,35 @@ private fun navigateToHomeActivity() {
     val intent = HomeActivity.getIntent(this)
     startActivity(intent)
     finish()
+}
+```
+
+참고로 Auth가 준비되었다고 해서 자동 로그인이 확인된 상태까지 `hideSplashScreen`을 `true`로 바꾸면 안된다. 만약 바꾸게 되면 로그인 화면이 잠깐 보였다가 홈 화면으로 이동하기 때문에 보기 나쁘기 때문이다.
+이는 아래처럼 뷰모델 코드를 작성하면 된다.
+
+**LoginViewModel.kt**
+
+```kotlin
+init {
+    viewModelScope.launch {
+        isAuthReadyUseCase().collectLatest { isAuthReady ->
+            if (isAuthReady) {
+                val isLoggedIn = getCurrentUserUseCase() != null
+
+                _uiState.update {
+                    if (isLoggedIn) {
+                        // 이미 로그인 되어있을 때는 `hideSplashScreen`를 `true`로 갱신하지 않는다.
+                        // 그 이유는 앱을 실행하고 곧바로 홈 화면으로 이동시 짧은 시간동안 로그인 화면이 등장하는
+                        // 버그를 막기 위해서이다.
+                        // https://github.com/hansung-pocs/blog-android/issues/150
+                        it.copy(isLoggedIn = true)
+                    } else {
+                        it.copy(hideSplashScreen = true)
+                    }
+                }
+            }
+        }
+    }
 }
 ```
 
