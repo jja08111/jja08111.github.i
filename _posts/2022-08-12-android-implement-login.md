@@ -258,7 +258,7 @@ Auth가 준비된다는 것의 의미는 세션 토큰의 유효성 검증이 �
 
 스플래시 스크린을 지연하는 방법은 [구글의 splash screen 공식 문서](https://developer.android.com/guide/topics/ui/splash-screen#suspend-drawing)에 잘 설명되어있다.
 
-아래는 이를 구현한 것이다. [뷰모델의 UiState이 변경되면 화면을 갱신하는 패턴](https://developer.android.com/jetpack/guide/ui-layer?hl=ko)을 사용하고 있다. Auth가 준비되면 `viewModel.fetchCurrentUser`가 호출되고 스플래시 화면은 종료된다.
+아래는 이를 구현한 것이다. [뷰모델의 UiState가 변경되면 화면을 갱신하는 패턴](https://developer.android.com/jetpack/guide/ui-layer?hl=ko)을 사용하고 있다. Auth가 준비되면 `viewModel.fetchCurrentUser`가 호출되고 스플래시 화면은 종료된다.
 만약 로그인이 되었다면 `navigateToHomeActivity`를 호출하여 홈화면으로 전환한다.
 
 **LoginActivity.kt**
