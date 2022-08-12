@@ -22,7 +22,8 @@ Firebase Auth가 아닌 **벡엔드 팀이 직접 구축한 로그인 기능**�
 
 ![architecture](https://user-images.githubusercontent.com/57604817/184180010-2c52a1b4-4b2a-47d8-a131-d955087e4881.png)
 
-로컬 저장을 위해 SharedPreferences를 이용하고 있으며 로그인한 현재 유저의 정보를 얻기 위해 UserRepository를 참조하고 있다. 가장 밑의 레이어부터 차근차근 알아보자.
+로컬 저장을 위해 SharedPreferences를 이용하고 있다. 이는 내부적으로 암호화를 위해 EncryptedSharedPreferences를 쓸것이다.
+그리고 로그인한 현재 유저의 정보를 얻기 위해 UserRepository를 참조하고 있다. 가장 밑의 레이어부터 차근차근 알아보자.
 
 # API
 
@@ -96,7 +97,8 @@ class AuthLocalDataSourceImpl @Inject constructor(
 }
 ```
 
-그런데 위를 보면 sharedPreferences를 의존성 주입받고 있다. 이는 아래와 같이 모듈을 만들어 주입할 수 있다.
+그런데 위를 보면 SharedPreferences를 의존성 주입받고 있다. 이는 아래와 같이 모듈을 만들어 주입할 수 있다.
+보통의 SharedPreferences는 루팅된 기기에서 값을 알아낼 수 있기 때문에 EncryptedSharedPreferences을 사용하여 암호화 했다.
 
 ```kotlin
 @Module
@@ -106,8 +108,20 @@ class LocalModule {
     @Singleton
     @Provides
     @Named("auth")
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("auth", Context.MODE_PRIVATE)
+    fun provideEncryptedSharedPreferences(
+        @ApplicationContext context: Context
+    ): SharedPreferences {
+        val masterKeyAlias = MasterKey.Builder(context, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        return EncryptedSharedPreferences.create(
+            context,
+            "auth",
+            masterKeyAlias,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
     }
 
     ...
