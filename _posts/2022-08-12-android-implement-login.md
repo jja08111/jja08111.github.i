@@ -12,7 +12,7 @@ tags:
 Firebase Auth가 아닌 **벡엔드 팀이 직접 구축한 로그인 기능**을 이용한다. 이전에 Firebase Auth를 사용해본 것과 달라 정리하고자 글을 쓴다.
 참고로 블로그 앱의 구조는 Clean architecture로 되어있으며 Hilt를 통해 의존성 주입을 하고 있다.
 
-2022년 8월 12일 기준 로그인 기능은 다음과 같이 작동한다.
+2022년 8월 20일 기준 로그인 기능은 다음과 같이 작동한다.
 
 - 로그인을 성공하면 서버에서 세션 토큰을 응답에 포함하여 준다.
 - 이전에 로그인한 상태로 앱을 다시 실행하면 로컬에 저장된 세션 토큰의 유효성 검사 후 유효하다면 그대로 이용한다.
@@ -20,7 +20,7 @@ Firebase Auth가 아닌 **벡엔드 팀이 직접 구축한 로그인 기능**�
 
 전체적인 구조는 아래 그림과 같다.
 
-![architecture](https://user-images.githubusercontent.com/57604817/184180010-2c52a1b4-4b2a-47d8-a131-d955087e4881.png)
+![architecture](https://user-images.githubusercontent.com/57604817/185727748-bf4b1e85-a43d-4a11-9c85-ccfc509a80b3.png)
 
 로컬 저장을 위해 SharedPreferences를 이용하고 있다. 이는 내부적으로 암호화를 위해 EncryptedSharedPreferences를 쓸것이다.
 그리고 로그인한 현재 유저의 정보를 얻기 위해 UserRepository를 참조하고 있다. 가장 밑의 레이어부터 차근차근 알아보자.
@@ -150,7 +150,7 @@ interface AuthRepository {
 ```
 
 이제 인터페이스를 구현한 클래스의 초기화 부분을 보자. 초기에는 이전에 로그인하여 저장된 local 데이터가 있는지 확인한다. 있다면 local 세션 토큰의 유효성 검증을 실행한다.
-성공한다면 유저의 정보를 얻어와 이 또한 성공한다면 현재 유저 상태를 갱신하고 토큰값을 변수에 담아둔다. 유효성 검증 결과 유효하지 않다면 로컬 데이터를 지운다.
+세션 토큰이 유효하다면 응답에 포함된 유저 정보를 이용하여 현재 유저 상태를 갱신하고 토큰값을 변수에 담아둔다. 유효성 검증 결과 유효하지 않다면 로컬 데이터를 지운다.
 
 유효성 검증 등의 작업이 끝나면 `isReady` 흐름에 `true`를 방출하여 Auth 준비가 끝났음을 UI에 알린다.
 
@@ -176,12 +176,9 @@ class AuthRepositoryImpl @Inject constructor(
                     val isSessionValid = response.isSuccessful
 
                     if (isSessionValid) {
-                        val userDetailResult = userRepository.getUserDetail(localData.userId)
-
-                        if (userDetailResult.isSuccess) {
-                            currentUserState.value = userDetailResult.getOrNull()!!
-                            token = localData.sessionToken
-                        }
+                        val userDto = response.body()!!.data.user
+                        currentUserState.value = userDto.toDetailEntity()
+                        token = localData.sessionToken
                     } else {
                         localDataSource.clear()
                     }
@@ -199,8 +196,8 @@ class AuthRepositoryImpl @Inject constructor(
 }
 ```
 
-이번에는 로그인 함수의 구현을 살펴보자. RemoteDataSource를 통해 로그인 API 요청을 보내고 성공한 응답을 받는 경우 앞서 설명과 동일하게 유저 디테일 정보를 얻어온다.
-유저 디테일 정보까지 성공적으로 얻는 경우 현재 유저의 상태 업데이트, 토큰 값 갱신 그리고 로컬 스토리지에 데이터를 저장한다.
+이번에는 로그인 함수의 구현을 살펴보자. RemoteDataSource를 통해 로그인 API 요청을 보낸다.
+응답으로 성공을 받은 경우 현재 유저의 상태 업데이트, 토큰 값 갱신 그리고 로컬 스토리지에 데이터를 저장한다.
 
 ```kotlin
 override suspend fun login(userName: String, password: String): Result<Unit> {
@@ -212,23 +209,12 @@ override suspend fun login(userName: String, password: String): Result<Unit> {
 
         if (response.isSuccessful) {
             val loginResponseData = response.body()!!.data
-            val userDetailResult = userRepository.getUserDetail(loginResponseData.userId)
 
-            if (userDetailResult.isSuccess) {
-                val userDetail = userDetailResult.getOrNull()!!
+            currentUserState.value = loginResponseData.user.toDetailEntity()
+            token = loginResponseData.sessionToken
+            localDataSource.setData(AuthLocalData(sessionToken = token!!))
 
-                currentUserState.value = userDetail
-                token = loginResponseData.sessionToken
-                localDataSource.setData(
-                    AuthLocalData(
-                        sessionToken = token!!,
-                        userId = userDetail.id
-                    )
-                )
-
-                return Result.success(Unit)
-            }
-            throw Exception("로그인에 성공하였으나 유저 정보를 얻지 못함: ${userDetailResult.exceptionOrNull()!!.message}")
+            return Result.success(Unit)
         } else {
             throw Exception(response.errorMessage)
         }
@@ -260,6 +246,8 @@ override suspend fun logout(): Result<Unit> {
     }
 }
 ```
+
+</br>
 
 # UI
 
@@ -382,6 +370,8 @@ fun login() {
     }
 }
 ```
+
+</br>
 
 # 테스트 작성
 
