@@ -247,7 +247,7 @@ override suspend fun logout(): Result<Unit> {
 }
 ```
 
-</br>
+<br>
 
 # UI
 
@@ -371,7 +371,7 @@ fun login() {
 }
 ```
 
-</br>
+<br>
 
 # 테스트 작성
 
