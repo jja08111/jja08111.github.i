@@ -57,6 +57,13 @@ header:
 
 ## Open Source
 
+### [markdown-toolbar-compose](https://github.com/jja08111/markdown-toolbar-compose)
+
+![markdown-toolbar-preview](https://github.com/jja08111/markdown-toolbar-compose/raw/main/images/preview.gif)
+
+- [동아리 앱](https://github.com/hansung-pocs/blog-android)을 개발하며 같이 개발
+- Jetpack compose를 이용하여 개발
+
 ### [time_chart](https://pub.dev/packages/time_chart)
 
 ![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/weekly_time_chart.gif?raw=true)![img](https://github.com/jja08111/time_chart/raw/main/assets/images/time_chart/monthly_time_chart.gif?raw=true)
