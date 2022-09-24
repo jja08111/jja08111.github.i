@@ -9,7 +9,7 @@ tags:
   - layout
 ---
 
-안드로이드의 새로운 UI 툴킷인 Jetpack Compose의 레이아웃을 깊이 탐구해보자.
+Jetpack Compose의 레이아웃을 깊이 탐구해보자.
 
 # Layout Model
 
