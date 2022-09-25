@@ -151,4 +151,131 @@ layout의 `placementBlock`은 일반적으로 후행 람다로 구현하여 각 
 
 # Layout Examples
 
-작성 중...
+직접 Column을 구현하며 Layout을 이해해보자.
+
+```kotlin
+@Composable
+fun MyColumn(
+  modifier: Modifier = Modifier,
+  content: @Composable () -> Unit
+) {
+  Layout(
+    modifier = modifier,
+    content = content
+  ) { measurables, constraints ->
+    val placeables = measurables.map { measurable ->
+      measurable.measure(constraints)
+    }
+    val height = placeables.sumOf { it.height }
+    val width = placeables.maxOf { it.width }
+    layout(width, height) {
+      var y = 0
+      placeables.forEach { placeable ->
+        placeable.placeRelative(x = 0, y = y)
+        y += placeable.height
+      }
+    }
+  }
+}
+```
+
+항목의 높이를 더한 값을 높이로 설정하고 가장 넓은 너비를 너비 값으로 설정한다. 그 후 width와 height를 보고하고 y값을 늘려주며 각 항목들을 배치한다.
+
+이번에는 예시로 Grid를 보겠다.
+
+```kotlin
+@Composable
+fun VerticalGrid(
+  modifier: Modifier = Modifier,
+  columns: Int = 2,
+  content: @Composable () -> Unit
+) {
+  Layout(
+    content = content,
+    modifier = modifier
+  ) { measurables, constraints ->
+    val itemWidth = constraints.maxWidth / columns
+    // Keep given height constraints, but set an exact width
+    val itemConstraints = constraints.copy(
+      minWdith = itemWidth,
+      maxWidth = itemWidth
+    )
+    // Measure each item with these constraints
+    val placeables = measurables.map { it.measure(itemConstraints) }
+    ...
+  }
+}
+```
+
+각 열은 레이아웃의 최대 너비를 일정한 비율로 나눈다. 구해진 값을 이용하여 새로운 constraints 값을 얻는다. 높이의 제약은 유지하되 정확한 너비를 지정한다.
+그 후 이 제약을 적용해 각 항목을 측정하고 그리드에 배치한다.
+
+상위와 하위 요소 간의 협상은 없다. 상위 요소는 허용 가능한 크기를 전달하고 이를 제약으로 표현한다. 하위 요소가 그중에서 크기를 선택하면 상위 요소는 이를 받아서 처리해야 한다.
+
+이러한 디자인에는 싱글 패스로 UI 트리 전체를 측정하고 여러 번의 측정 사이클을 돌리지 않아도 되는 장점이 있다. 기존 View에서는 이게 문제였다. 여러 번 측정값을 입력하는 중첩된 계층 구조에서는 리프 뷰에서 측정값의 2차적 값이 발생하기도 했다.
+Compose는 설계부터 이를 차단했다.
+
+다음으로 [Jetsnack 샘플 앱](https://github.com/android/compose-samples/tree/main/Jetsnack)에 존재하는 [BottomNavItem](https://github.com/android/compose-samples/blob/5bc3451b11f9aae111b8a6dca0199a317c997a2b/Jetsnack/app/src/main/java/com/example/jetsnack/ui/home/Home.kt#L278-L317)을 살펴보자.
+
+```kotlin
+@Composable
+fun BottomNavItem(
+  icon: @Composable BoxScope.() -> Unit,
+  text: @Composable BoxScope.() -> Unit,
+  @FloatRange(from = 0.0, to = 1.0) animationProgress: Float
+) {
+  Layout(
+    content = {
+      Box(
+        modifier = Modifier.layoutId("icon"),
+        content = icon
+      )
+      Box(
+        modifier = Modifier.layoutId("text"),
+        content = text
+      )
+    }
+  ) { measurables, constraints ->
+    val iconPlaceable = measurables.first { it.layoutId == "icon" }.measure(constraints)
+    val textPlaceable = measurables.first { it.layoutId == "text" }.measure(constraints)
+
+    placeTextAndIcon(
+        textPlaceable,
+        iconPlaceable,
+        constraints.maxWidth,
+        constraints.maxHeight,
+        animationProgress
+    )
+  }
+}
+```
+
+BottomNavItem는 animationProgress가 0.0이면 아이콘만 렌더링하고 1.0인 경우에는 레이블까지 렌더링한다. Custom Layout은 measure블록에서 measurable을 식별하기 위해서 layoutId를 지정한다. 이는 순서 정렬에 의지하는 것보다 훨씬 안정적이다.
+
+```kotlin
+private fun MeasureScope.placeTextAndIcon(
+  textPlaceable: Placeable,
+  iconPlaceable: Placeable,
+  width: Int,
+  height: Int,
+  @FloatRange(from = 0.0, to = 1.0) animationProgress: Float
+): MeasureResult {
+  val iconY = (height - iconPlaceable.height) / 2
+  val textY = (height - textPlaceable.height) / 2
+
+  val textWidth = textPlaceable.width * animationProgress
+  val iconX = (width - textWidth - iconPlaceable.width) / 2
+  val textX = iconX + iconPlaceable.width
+
+  return layout(width, height) {
+    iconPlaceable.placeRelative(iconX.toInt(), iconY)
+    if (animationProgress != 0f) {
+      textPlaceable.placeRelative(textX.toInt(), textY)
+    }
+  }
+}
+```
+
+`placeTextAndIcon`의 경우 코드 가독성을 위해 따로 함수를 만들었다. 수학적 계산을 통해 애니메이션 진행 값에 따라 텍스트와 아이콘을 배치한다.
+
+Compose의 레이아웃은 성능이 뛰어나 측정이나 배치에 애니메이션을 적용하거나 제스처로 실행할 수 있다. View 시스템에서는 성능 문제로 인해 레이아웃 애니메이션을 권장하지 않아서 구현이 어려웠다.
