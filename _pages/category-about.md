@@ -17,7 +17,7 @@ header:
 ### Introduction
 
 - 안녕하세요 김민성입니다.
-- 문제 해결의 즐거움을 느끼며 최근에는 Flutter와 Android를 공부하고 있습니다.
+- 문제 해결의 즐거움을 느끼며 Android와 Flutter로 앱을 개발하고 있습니다.
 
 ### Contact
 
@@ -26,6 +26,21 @@ header:
 
 ## Projects
 
+### [POCS 블로그 App](https://github.com/hansung-pocs/blog-android)
+
+<img src="https://user-images.githubusercontent.com/57604817/207652827-40b6390d-0dd4-4bc0-b0b4-e49b115996ab.png" width="500">
+
+- 한성대학교 소모임 POCS를 위한 Android 커뮤니티 앱.
+- 안드로이드, 웹프론트, 벡엔드와 협업하여 개발한 앱. 적극적으로 [코드리뷰](https://jja08111.github.io/develop/code-review/)를 하였음.
+- 클린 아키텍쳐, MVVM 패턴 적용
+- Hilt, Dagger를 이용하여 의존성 주입
+- Retrofit을 이용하여 HTTP 통신
+- Glide를 이용하여 이미지 렌더링
+- Compose를 일부 도입하여 UI 구현
+- [markdown-toolbar-compose](https://github.com/jja08111/markdown-toolbar-compose) 라이브러리 maven central에 배포
+- JUnit4와 Esspresso를 이용하여 적극적으로 테스트 코드 작성
+- [Repository Link](https://github.com/jja08111/blog-android)
+
 ### [한성대 공지 App](https://play.google.com/store/apps/details?id=com.foundy.hansungnotification)
 
 <img src="https://play-lh.googleusercontent.com/N1ie6859fXSZVP-iOc82OVXOXK5noIhR7pp0hWNPlfRo1qV_kXEvTVDvLV_M-0kMigQ=w416-h235" width="500">
@@ -33,6 +48,8 @@ header:
 - 모바일에서 학교 공지사항을 편하게 볼 수 있는 Android 앱
 - 키워드를 등록하여 공지 알림을 받을 수 있음
 - [Clean Architecture](https://jja08111.github.io/android/android-clean-architecture/), MVVM 패턴 적용
+- Hilt, Dagger를 이용한 의존성 주입
+- Retrofit을 이용한 HTTP 통신
 - [CI 구축(App build, Unit test, Espresso test)](https://jja08111.github.io/android/android-ci-with-github-action/)
 - [Repository Link](https://github.com/jja08111/HansungNotification)
 
