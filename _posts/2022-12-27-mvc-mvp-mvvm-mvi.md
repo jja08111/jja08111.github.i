@@ -145,7 +145,7 @@ observable 값이 없다면 의존성 관계는 아래와 같을 것이다. 이�
 
 안드로이드 코드로 예를 들어보겠다. ViewModel는 관찰 가능한 값인 `LiveData`를 가진다. 이는 `StateFlow`로 대체할 수 있다.
 `MainActivity`에서는 `MainViewModel`을 가지며 `observe` 함수를 호출하여 `uiState` 갱신을 구독한다.
-만약 `onClickSomething`가 호출되어 `viewModel.doSomething`이 실행된다면 viewModel의 observable 값인 `uiState`가 갱신될것이고 이를 구독하는 뷰에서 알림이 간다.
+만약 `onClickSomething`가 호출되어 `viewModel.doSomething`이 실행된다면 viewModel의 observable 값인 `uiState`가 갱신될것이고 이를 구독하는 뷰에 알림이 간다.
 뷰는 알림을 받아 처리하면 된다.
 
 ```kotlin
