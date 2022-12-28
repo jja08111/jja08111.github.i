@@ -166,9 +166,9 @@ class MainViewModel : ViewModel() {
     }
 
     private fun showUserMessage() {
-        _uiState.value?.let {
-            _uiState.postValue(it.copy(userMessage = R.string.some_string))
-        }
+      requireNotNull(_uiState.value).let {
+        _uiState.postValue(it.copy(userMessage = R.string.some_string))
+      }
     }
 }
 
