@@ -61,7 +61,7 @@ class MainActivity : AppCompactActivity() {
 - 코드 재활용성이 떨어지기 때문에 동일한 로직을 가진 코드가 여기저기 흩어지게 되고 이 또한 유지보수하기 나쁘다.
 - View와 Model의 결합도가 높다. 앞선 코드를 보면 View에서 Model을 직접 호출하는 것을 볼 수 있다. View가 Model에 의존성을 가지게 되며 테스트하기 어렵게 된다.
 
-</br>
+<br></br>
 
 # MVP
 
@@ -128,7 +128,7 @@ class Presenter(val viewInterface: ViewInterface) {
 
 - View와 Presenter가 1:1 의존 관계이기 때문에 유사한 로직을 가진 뷰들이 있을 때 계속해서 Presenter를 만들어야하는 단점이 존재한다.
 
-</br>
+<br></br>
 
 # MVVM
 
@@ -205,7 +205,7 @@ class MainActivity : AppCompactActivity() {
 
 - 상태 값이 많아지면 관리하기 어려워진다.
 
-</br>
+<br></br>
 
 # MVI
 
