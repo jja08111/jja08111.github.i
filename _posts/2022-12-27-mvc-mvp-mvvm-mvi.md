@@ -101,8 +101,6 @@ class MainActivity : AppCompactActivity(), ViewInterface {
 
 class Presenter(val viewInterface: ViewInterface) {
 
-  val model = Model()
-
   fun onClickSomething() {
     // ...
 
