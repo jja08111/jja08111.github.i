@@ -123,10 +123,11 @@ class Presenter(val viewInterface: ViewInterface) {
 ## 장점
 
 - Presenter가 View에 대한 의존성이 없기 때문에 Presenter를 테스트하기 좋다.
+- 코드가 적절히 분리되어 유지보수하기 좋다.
 
 ## 단점
 
-- View와 Presenter가 1:1 의존 관계이기 때문에 유사한 로직을 가진 뷰들이 있을 때 계속해서 Presenter를 만들어야하는 단점이 존재한다.
+- View와 Presenter가 1:1 의존 관계이기 때문에 유사한 유사한 로직을 가진 뷰들이 있을 때에도 계속해서 Presenter를 만들어야하는 단점이 존재한다.
 
 <br>
 
@@ -200,6 +201,7 @@ class MainActivity : AppCompactActivity() {
 ## 장점
 
 - ViewModel이 View에 독립적이기 때문에 중복되는 로직을 모듈화 할 수 있다. 이는 테스트하기에도 좋다.
+- 코드가 적절히 분리되어 유지보수하기 좋다.
 
 ## 단점
 
