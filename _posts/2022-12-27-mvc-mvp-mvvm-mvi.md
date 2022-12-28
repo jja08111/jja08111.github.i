@@ -374,7 +374,7 @@ private fun handleSideEffect(sideEffect: MainSideEffect) {
 
 ## 단점
 
-- 배우는데 시간이 필요하다. 멀티 스레드, 코루틴을 정확히 이해해고 있어야 한다.
+- 배우는데 시간이 필요하다. 코루틴을 정확히 이해해고 있어야 한다.
 - 작은 행위에도 SideEffect 클래스를 만들어야 하기 때문에 번거로울 수 있다.
 
 <br>
