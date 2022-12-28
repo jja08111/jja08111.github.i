@@ -141,7 +141,7 @@ observable 값이 없다면 의존성 관계는 아래와 같을 것이다. 이�
 ![vvm](https://user-images.githubusercontent.com/57604817/209697713-cf474f33-5663-47c5-bc3b-56ef61a92911.png)
 
 이는 [Observer 패턴](https://en.wikipedia.org/wiki/Observer_pattern)을 이용하여 문제를 해결할 수 있다.
-아래의 다이어그램을 보면 `Observer` 인터페이스를 통해 ViewModel에서 View를 의존하는 문제가 해결된 것을 볼 수 있다.
+아래의 다이어그램을 보면 `FlowCollector` 인터페이스를 통해 ViewModel에서 View를 의존하는 문제가 해결된 것을 볼 수 있다.
 
 ![vvm-observer](https://user-images.githubusercontent.com/57604817/209753151-684a0712-e20d-4885-85c0-b42fd529cf58.png)
 
