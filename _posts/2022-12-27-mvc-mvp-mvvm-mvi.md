@@ -28,7 +28,7 @@ MVC는 Model, View, Control로 구성된다.
 3. View는 Model 혹은 Control으로부터 갱신 필요 여부 이벤트를 받는다.
 4. Model에서 데이터를 받아와 View를 갱신한다.
 
-그런데 Android에서는 View와 Control이 Activity나 Fragment와 같은 View들이 모두 가지고 있다.
+그런데 Android에서는 Activity나 Fragment들이 View와 Control 모두 가지고 있다.
 예를 들면 아래와 같은 코드이다.
 
 ```kotlin
