@@ -35,8 +35,7 @@ MVC는 Model, View, Control로 구성된다.
 class MainActivity : AppCompactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
-
-    ...
+    // ...
 
     val fab = findViewById<FloatingActionButton>()
     fab.setOnClickListener {
@@ -105,15 +104,13 @@ class Presenter(val viewInterface: ViewInterface) {
   val model = Model()
 
   fun onClickSomething() {
-
-    ...
+    // ...
 
     doSomething()
   }
 
   fun doSomething() {
-
-    ...
+    // ...
 
     viewInterface.showSnackBar(R.string.some_string)
   }
@@ -146,10 +143,10 @@ observable 값이 없다면 의존성 관계는 아래와 같을 것이다. 이�
 이는 [Observer 패턴](https://en.wikipedia.org/wiki/Observer_pattern)을 이용하여 문제를 해결할 수 있다.
 아래의 다이어그램을 보면 `Observer` 인터페이스를 통해 ViewModel에서 View를 의존하는 문제가 해결된 것을 볼 수 있다.
 
-![vvm-observer](https://user-images.githubusercontent.com/57604817/209699179-6fece0b6-3e68-43fe-9daf-70107027893a.png)
+![vvm-observer](https://user-images.githubusercontent.com/57604817/209753151-684a0712-e20d-4885-85c0-b42fd529cf58.png)
 
-안드로이드 코드로 예를 들어보겠다. ViewModel은 관찰 가능한 값인 `LiveData`를 가진다. 이는 `StateFlow`로도 구현할 수 있다.
-`MainActivity`에서는 `MainViewModel`을 가지며 `observe` 함수를 호출하여 `uiState` 갱신을 구독한다.
+안드로이드 코드로 예를 들어보겠다. ViewModel은 관찰 가능한 값인 `StateFlow`를 가진다.
+`MainActivity`에서는 `MainViewModel`을 가지며 `collect` 함수를 호출하여 `uiState` 갱신을 구독한다.
 만약 `onClickSomething`가 호출되어 `viewModel.doSomething`이 실행된다면 viewModel의 observable 값인 `uiState`가 갱신될것이고 이를 구독하는 뷰에 알림이 간다.
 뷰는 알림을 받아 처리하면 된다.
 
@@ -160,21 +157,26 @@ data class MainUiState(
 
 class MainViewModel : ViewModel() {
 
-    private val _uiState = MutableLiveData(MainUiState())
-    val uiState: LiveData<MainUiState> = _uiState
+  private val _uiState = MutableStateFlow(MainUiState())
+  val uiState get() = _uiState.asStateFlow()
 
-    fun doSomething() {
+   fun doSomething() {
+    // ...
 
-      ...
+    showUserMessage()
+  }
 
-      showUserMessage()
-    }
-
-    private fun showUserMessage() {
-      requireNotNull(_uiState.value).let {
-        _uiState.postValue(it.copy(userMessage = R.string.some_string))
+  private fun showUserMessage() {
+      _uiState.update {
+          it.copy(userMessage = R.string.some_string)
       }
-    }
+  }
+
+  fun userMessageShown() {
+      _uiState.update {
+          it.copy(userMessage = null)
+      }
+  }
 }
 
 class MainActivity : AppCompactActivity() {
@@ -182,14 +184,17 @@ class MainActivity : AppCompactActivity() {
   private val viewModel: MainViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    // ...
 
-    ...
-
-    viewModel.uiState.observe(this, ::updateUi)
+    lifecycleScope.launch {
+      repeatOnLifecycle(Lifecycle.State.STARTED) {
+        viewModel.uiState.collect(::updateUi)
+      }
+    }
   }
 
   private fun updateUi(uiState: MainUiState) {
-    ...
+    // ...
   }
 
   private fun onClickSomething() {
