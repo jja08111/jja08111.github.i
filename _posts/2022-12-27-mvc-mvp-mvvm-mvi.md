@@ -160,22 +160,22 @@ class MainViewModel : ViewModel() {
   private val _uiState = MutableStateFlow(MainUiState())
   val uiState get() = _uiState.asStateFlow()
 
-   fun doSomething() {
+  fun doSomething() {
     // ...
 
     showUserMessage()
   }
 
   private fun showUserMessage() {
-      _uiState.update {
-          it.copy(userMessage = R.string.some_string)
-      }
+    _uiState.update {
+      it.copy(userMessage = R.string.some_string)
+    }
   }
 
   fun userMessageShown() {
-      _uiState.update {
-          it.copy(userMessage = null)
-      }
+    _uiState.update {
+      it.copy(userMessage = null)
+    }
   }
 }
 
