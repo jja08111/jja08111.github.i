@@ -317,8 +317,7 @@ class MainViewModel(
   private val postRepository: PostRepository = PostRepository(),
 ) : ViewModel(), ContainerHost<MainUiState, MainSideEffect> {
 
-  override val container: Container<MainUiState, MainSideEffect>
-    get() = container(MainUiState())
+  override val container = container<MainUiState, MainSideEffect>(MainUiState())
 
   init {
     fetchOverviews()
