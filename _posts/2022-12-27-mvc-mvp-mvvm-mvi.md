@@ -224,7 +224,7 @@ intent가 model에 전달되는 것 외에도 sideEffect가 model에 전달된�
 ![mvi](https://user-images.githubusercontent.com/57604817/209839928-d195d19b-e5a8-4dc8-8a6c-c1cbef9cc9bc.png)
 
 직접 위의 구조를 구현하면 아래와 같다. 중복되는 코드들을 `Container`라는 클래스에 모아 다시 사용할 수 있다. `Container`를 살펴보면 uiState 그리고 sideEffect가 존재하는 것을 볼 수 있다.
-uiState는 `StateFlow`이라 특정한 값을 가지고 있는 반면 sideEffect는 `Channel`이어서 값을 보내기만 하며 가지고 있지는 않는다. `reduce` 함수는 상태를 갱신한다. `postSideEffect`는 부수효과를 전달한다.
+uiState는 `StateFlow`라 특정한 값을 가지고 있는 반면 sideEffect는 `Channel`이어서 값을 보내기만 하며 가지고 있지는 않는다. `reduce` 함수는 상태를 갱신한다. `postSideEffect`는 부수효과를 전달한다.
 `intent` 함수는 정해진 `scope`에서 suspend 함수를 실행한다.
 
 ```kotlin
