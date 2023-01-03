@@ -1,5 +1,5 @@
 ---
-title: "[Android] 의존성 주입 wiht Hilt"
+title: "[Android] 의존성 주입"
 date: 2023-01-03 01:20:00 -0400
 categories: android
 tags:
