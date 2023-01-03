@@ -68,7 +68,7 @@ class KeywordViewModel(
 }
 ```
 
-이때 필요한 것이 의존성 주입 라이브러리이다. 물론 수동으로 의존성 주입 컨테이너를 구현할 수도 있다. 하지만 [종속 항목 수동 삽입](https://developer.android.com/training/dependency-injection/manual) 글을 읽어 보면 굉장히 많은 상용구가 존재하여 불편하고, 수명 주기를 잘못 관리할 수 있어 메모리 누수 위험성이 있다.
+이때 필요한 것이 의존성 주입 라이브러리이다. 물론 수동으로 의존성 주입 컨테이너를 구현할 수도 있다. 하지만 [종속 항목 수동 삽입](https://developer.android.com/training/dependency-injection/manual) 글에서 알 수 있듯이 수동 의존성 주입은 굉장히 많은 상용구가 존재하여 불편하고, 수명 주기를 잘못 관리할 수 있어 메모리 누수 위험성이 있다.
 
 # Hilt
 
