@@ -1,6 +1,6 @@
 ---
 title: "[Android] Activity Lifecycle"
-date: 2023-01-09 22:20:00 -0400
+date: 2023-01-09 22:20:00 +0900
 categories: android
 tags:
   - android
