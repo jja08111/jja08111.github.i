@@ -122,7 +122,7 @@ tags:
 예를 들어 안좋은 구현은 아래와 같다. 매번 `myLocationListener`를 사용할 때마다 `start()`, `stop()`이 반복적으로 호출될 것이다.
 
 ```kotlin
-internal class MyLocationListener(
+class MyLocationListener(
         private val context: Context,
         private val callback: (Location) -> Unit
 ) {
@@ -164,7 +164,11 @@ class MyActivity : AppCompatActivity() {
 이는 아래와 같이 개선할 수 있다.
 
 ```kotlin
-class MyObserver : DefaultLifecycleObserver {
+class MyLocationListener(
+    private val context: Context,
+    private val callback: (Location) -> Unit
+) : DefaultLifecycleObserver{
+
     override fun onStart(owner: LifecycleOwner) {
         // ...
     }
@@ -174,5 +178,16 @@ class MyObserver : DefaultLifecycleObserver {
     }
 }
 
-myLifecycleOwner.getLifecycle().addObserver(MyObserver())
+class MyActivity : AppCompatActivity() {
+    private lateinit var myLocationListener: MyLocationListener
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        myLocationListener = MyLocationListener(this) { location ->
+            // update UI
+        }
+
+        lifecycle.addObserver(myLocationListener)
+    }
+}
 ```
