@@ -83,7 +83,7 @@ header:
 
 <a href="https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app"><img alt="Playstore" src="https://img.shields.io/badge/Playstore-1d7c48.svg?&style=for-the-badge&logo=googleplay&logoColor=white"/>
 
-> 개발 기간: 2020.12 ~ 2022.03 (4개월) + 유지보수 4개월
+> 개발 기간: 2020.12 ~ 2021.03 (4개월) + 유지보수 4개월
 
 - 수면 알람을 이용하여 규칙적인 수면 습관 형성을 도와주는 Flutter 앱
 - 수면 체크리스트를 통해 더욱 깊은 수면을 도와줌
