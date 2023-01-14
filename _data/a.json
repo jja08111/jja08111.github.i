@@ -1,0 +1,14 @@
+{
+  "userId": 90,
+  "?defaultInfo": {
+    "name": "test1",
+    "email": "test1@gmail.com",
+    "studentId": "10100",
+    "?company": "-",
+    "generation": 12,
+    "?github": "https://github.com/km"
+  },
+  "type": "member",
+  "createdAt": "2022-08-15",
+  "?canceledAt": "2022-08-15"
+}
