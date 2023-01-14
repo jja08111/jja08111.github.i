@@ -1,6 +1,6 @@
 ---
 title: "브라우저에 google.com을 입력하면 일어나는 일"
-date: 2023-01-14 16:20:00 -0400
+date: 2023-01-14 16:20:00 +0900
 categories: network
 tags:
   - newtwork
