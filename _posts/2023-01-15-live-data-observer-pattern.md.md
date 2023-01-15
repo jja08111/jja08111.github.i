@@ -101,7 +101,7 @@ private void considerNotify(ObserverWrapper observer) {
 
 이들을 클래스 다이어그램으로 간략하게 나타내면 아래와 같다.
 
-![diagram](assets/images/live_data_class_diagram.png)
+![diagram](/assets/images/live_data_class_diagram.png)
 
 # 라이프 사이클
 
