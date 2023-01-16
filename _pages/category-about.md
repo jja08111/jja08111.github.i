@@ -39,7 +39,7 @@ header:
 - 안드로이드, 웹프론트, 벡엔드 총 10명이 함께 기획하고 개발한 프로젝트.
 - 함께 성장 하기 위해 적극적으로 [코드리뷰](https://jja08111.github.io/develop/code-review/)를 진행.
 - 앱에 필요한 [markdown-toolbar-compose](https://github.com/jja08111/markdown-toolbar-compose) 라이브러리를 개발하여 maven central에 배포
-- 기술: `Android`, `Kotlin`, `Clean Architecture`, `MVVM`, `Hilt`, `Dagger2`, `Retrofit`, `OkHttp3`, `Compose`, `ViewBinding`, `JUnit4`, `Esspresso`, `GitHub Actions`
+- 기술: `Android` `Kotlin` `Clean Architecture` `MVVM` `Hilt` `Dagger2` `Retrofit` `OkHttp3` `Compose` `ViewBinding` `JUnit4` `Esspresso` `GitHub Actions`
 
 ### 한성대 공지 앱
 
@@ -52,7 +52,7 @@ header:
 
 - 모바일에서 학교 공지사항을 빠르고 쉽게 볼 수 있는 Android 앱
 - Firebase push notification을 이용하여 키워드 알림 기능 구현
-- 기술: `Android`, `Kotlin`, `Clean Architecture`, `MVVM`, `Hilt`, `Dagger2`, `Retrofit`, `OkHttp3`, `ViewBinding`, `JUnit4`, `Esspresso`, `GitHub Actions`, `Firebase`
+- 기술: `Android` `Kotlin` `Clean Architecture` `MVVM` `Hilt` `Dagger2` `Retrofit` `OkHttp3` `ViewBinding` `JUnit4` `Esspresso` `GitHub Actions` `Firebase`
 
 ### 뭐먹을까 앱
 
@@ -68,7 +68,7 @@ header:
 - 동시에 최대 16개의 이미지를 분류하는 작업 때문에 발생했던 **퍼포먼스 문제를 Isolate를 활용**하여 **10프레임 -> 50프레임 이상으로 개선**한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 - 적극적으로 **테스트 코드**를 작성했으나 의존성을 잘 관리하지 못하여 Fake 및 Mock을 만들기 어려워 테스트 코드 작성이 어려웠음
 - CI/CD 적용(Github Action, Fastlane)
-- 기술: `Flutter`, `Dart`, `Getx`, `Firebase`, `Tensorflow`, `Kakao API`, `GitHub Actions`
+- 기술: `Flutter` `Dart` `Getx` `Firebase` `Tensorflow` `Kakao API` `GitHub Actions`
 
 ### 꿀밤(Bedtime) 앱
 
@@ -82,7 +82,7 @@ header:
 - 수면 체크리스트를 통해 더욱 깊은 수면을 도와줌
 - **Android에서 동작하는 Flutter 알람 앱**을 개발한 [경험](https://jja08111.github.io/flutter/flutter-alarm-app/)
 - 사용자가 요구한 기능(ex: 사용자 커스텀 알람 음악 기능, 수면 알람에서 취침 알람만 비활성화하는 기능 등)을 추가하며 **앱을 유지보수 한 경험**
-- 기술: `Flutter`, `Dart`, `Provider`, `Android`, `SQLite`
+- 기술: `Flutter` `Dart` `Provider` `Android` `SQLite` `Firebase`
 
 ## Open Source
 
