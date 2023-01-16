@@ -68,7 +68,7 @@ header:
 - 동시에 최대 16개의 이미지를 분류하는 작업 때문에 발생했던 **퍼포먼스 문제를 Isolate를 활용**하여 **10프레임 -> 50프레임 이상으로 개선**한 [경험](https://jja08111.github.io/flutter/flutter-tflite-with-isolate/)
 - 적극적으로 **테스트 코드**를 작성했으나 의존성을 잘 관리하지 못하여 Fake 및 Mock을 만들기 어려워 테스트 코드 작성이 어려웠음
 - CI/CD 적용(Github Action, Fastlane)
-- 기술: `Flutter` `Dart` `Getx` `Firebase` `Tensorflow` `Kakao API` `GitHub Actions`
+- 기술: `Flutter` `Dart` `Getx` `Firebase` `Tensorflow` `Kakao-API` `GitHub-Actions`
 
 ### 꿀밤(Bedtime) 앱
 
