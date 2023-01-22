@@ -108,7 +108,7 @@ header:
 
 ## Certifications
 
-- SW검정 Professional (SW Certificate Professional) - SAMSUNG SDS
+- SAMSUNG SDS SW Certificate Professional ( 2022.01.20 )
 
 ## Activity
 
