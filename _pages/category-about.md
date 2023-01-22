@@ -106,6 +106,10 @@ header:
 - 플러터 플러그인에서 시간을 나타내는 차트가 없어서 직접 개발
 - 이분탐색을 활용해 1,000개의 데이터도 버거워하던 **차트 렌더링 성능을 10,000개 이상의 데이터도 무난히 수용할 수 있도록 개선한 경험**
 
+## Certifications
+
+- SW검정 Professional (SW Certificate Professional) - SAMSUNG SDS
+
 ## Activity
 
 - 한성대학교 컴퓨터공학부 소모임 POCS 활동 ( 2022.06 ~ )
