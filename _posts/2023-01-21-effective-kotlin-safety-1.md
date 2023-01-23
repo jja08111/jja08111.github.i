@@ -56,7 +56,7 @@ if (list is MutableList) {
 }
 ```
 
-위와 같은 방법 대신 복제를 통해서 새로운 mutable 컬렉션을 만드는 API를 활요하는 것이 안전하다.
+위와 같은 방법 대신 복제를 통해서 새로운 mutable 컬렉션을 만드는 API를 활용하는 것이 안전하다.
 
 ```kotlin
 val list: List = fetchSomeList()
