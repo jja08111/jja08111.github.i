@@ -316,7 +316,11 @@ class <anonymous_for_state_machine> extends SuspendLambda<...> {
 }
 ```
 
+위의 객체는 JVM 힙 영역에 할당되어 여러 스레드에게서 재개될 수 있다. 그렇기 때문에 context-switcing 오버헤드가 상당히 적다.
+스레드는 스레드마다 스택 영역을 가지고 있기 때문에 코루틴에 비해 context-switcing 오버헤드가 크고 무겁다.
+
 # 참조
 
 - [Kotlin/KEEP/proposals/coroutines.md](https://github.com/Kotlin/KEEP/blob/master/proposals/coroutines.md)
 - [Android의 Kotlin 코루틴](https://developer.android.com/kotlin/coroutines?hl=ko)
+- [Thread vs Coroutine 비교해보기 by haero_kim](https://velog.io/@haero_kim/Thread-vs-Coroutine-비교해보기)
