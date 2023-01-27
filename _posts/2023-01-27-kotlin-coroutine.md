@@ -111,7 +111,7 @@ Done
 
 안드로이드에서는 흔히 사용되는 코루틴 스코프가 존재한다. `viewModelScope`, `lifecycleScope`와 같은 [수명 주기 인식 구성요소와 함께 사용되는 코루틴 스코프](https://developer.android.com/topic/libraries/architecture/coroutines?hl=ko)가 존재한다. 때문에 생명주기가 존재하는 엑티비티, 프레그먼트, 뷰모델 등에서 안전하게 코루틴을 사용할 수 있다.
 
-# async, await
+# async로 병렬 처리
 
 만약 실행에 필요한 비동기 요청들이 의존성이 없어 동시에 처리하려면 어떻게 해야할까? `launc`를 여러번 수행해도 되지만 `async`를 이용하는 방법도 존재한다. `async`는 `launch`와 유사하게 독립된 코루틴을 실행한다.
 다른 부분은 `launch`는 `Job`을 반환하는데, `async`는 결과를 나중에 제공해주는 `Deferred`를 반환한다.
@@ -210,7 +210,9 @@ Computation failed with ArithmeticException
 */
 ```
 
-# [Flow](https://jja08111.github.io/kotlin/kotlin-flow/)
+# Flow
+
+Flow는 [다른 글](https://jja08111.github.io/kotlin/kotlin-flow/)에 정리해놓았다.
 
 # Channel
 
