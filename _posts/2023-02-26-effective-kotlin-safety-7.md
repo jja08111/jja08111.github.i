@@ -1,22 +1,11 @@
 ---
- title: "[Effective Kotlin] 1장 안정성"
+ title: "[Effective Kotlin] 7. 결과 부족이 발생할 경우 null과 Failure를 사용하라"
  date: 2023-03-19 10:12:00 +0900
  categories: kotlin
  tags:
    - kotlin
    - effective_kotlin
 ---
-
-하나의 아이템씩 따로 글을 작성하려다가 한 장씩 작성하는 것으로 생각을 바꿨다. 이전 아이템 목록은 아래에 있다.
-
-- [1. 가변성을 제한하라](https://jja08111.github.io/kotlin/effective-kotlin-safety-1/)
-- [2. 변수의 스코프를 최소화하라](https://jja08111.github.io/kotlin/effective-kotlin-safety-2/)
-- [3. 최대한 플랫폼 타입을 사용하지 말라](https://jja08111.github.io/kotlin/effective-kotlin-safety-3/)
-- [4. inferred 타입으로 리턴하지 말라](https://jja08111.github.io/kotlin/effective-kotlin-safety-4/)
-- [5. 예외를 활용해 코드에 제한을 걸어라](https://jja08111.github.io/kotlin/effective-kotlin-safety-5/)
-- [6. 사용자 정의 오류보다는 표준 오류를 사용하라](https://jja08111.github.io/kotlin/effective-kotlin-safety-6/)
-
-# 7. 결과 부족이 발생할 경우 null과 Failure를 사용하라
 
 함수가 원하는 결과를 만들어 낼 수 없을 때가 있다. 예를 들어 서버로부터 데이터를 읽어 들이려고 했으나, 인터넷 연결 문제로 읽지 못한 경우이다.
 이러한 상황을 처리하는 방법은 아래와 같이 크게 두 가지가 있다.
@@ -58,7 +47,3 @@ inline fun <reified T> String.readObject(): Result<T> {
 
 그렇다면 `null` 혹은 `Failure` 중 무엇을 사용할지 어떻게 결정할까? `null`은 예외 상황에 대해 추가적인 정보가 없을 때 사용하고 `Failure`는 추가 정보가 필요할 때 사용하면 된다.
 예를 들어 서버에 잘못된 요청을 하여 서버에서 전달해준 메시지와 함께 예외를 반환해야하는 경우 `Failure`가 적절하다.
-
-# 8. 적절하게 null을 처리하라
-
-TODO
