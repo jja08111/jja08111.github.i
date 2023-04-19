@@ -1,5 +1,5 @@
 ---
- title: "[Deview] Kotlin Multiplatform 적용기 요약"
+ title: "[Naver Deview] Kotlin Multiplatform 적용기 요약"
  date: 2023-03-22 10:12:00 +0900
  categories: kotlin
  tags:
