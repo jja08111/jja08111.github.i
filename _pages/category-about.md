@@ -26,6 +26,23 @@ header:
 
 ## Projects
 
+### 공부하는 농부
+
+<img src="https://user-images.githubusercontent.com/57604817/241357589-e2e0ac12-b7c2-4374-9607-6cf5fb12051f.png" width="300">
+
+<a href="https://github.com/Foundy-LLC/camstudy-android"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/>
+
+> 개발 기간: 2022.12 ~ 2023.05 (6개월)
+
+- 캠을 켜고 서로 공부하는 모습을 공유하며 몰입도를 향상시키는 **캠 스터디 서비스**
+- 졸업 작품으로 진행한 프로젝트이며 4명이 참여
+- WebRTC 라이브러리인 Mediasoup을 이용하여 [미디어 서버](https://github.com/Foundy-LLC/camstudy-webrtc-server) 구축 및 소켓 통신
+- 안드로이드 앱과 미디어 서버 개발 담당
+- 현업에 종사하는 디자이너와 협업
+- Android 기술: `Android` `Kotlin` `MVI` `Orbit` `Compose` `WebRTC` `SocketIO` `Coil` `Mediasoup` `Hilt` `Dagger2` `Retrofit` `JUnit4`
+- Media Server 기술: `NodeJS` `Typescript` `Mediasoup` `WebRTC` `SocketIO`
+- 결과: 한성대학교 2023년 캡스톤 디자인 **우수상**
+
 ### POCS 블로그 앱
 
 <img src="https://user-images.githubusercontent.com/57604817/207652827-40b6390d-0dd4-4bc0-b0b4-e49b115996ab.png" width="500">
