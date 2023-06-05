@@ -32,7 +32,7 @@ header:
 
 <a href="https://github.com/Foundy-LLC/camstudy-android"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/>
 
-> 개발 기간: 2022.12 ~ 2023.05 (6개월)
+> 개발 기간: 2022.12 ~ 2023.05 (6개월)  
 > 개발 인원: 4명
 
 - 캠을 켜고 서로 공부하는 모습을 공유하며 몰입도를 향상시키는 **캠 스터디 서비스**
@@ -50,7 +50,7 @@ header:
 <a href="https://github.com/hansung-pocs/blog-android"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/>
 <a href="https://play.google.com/store/apps/details?id=com.pocs.blog"><img alt="Playstore" src="https://img.shields.io/badge/Playstore-1d7c48.svg?&style=for-the-badge&logo=googleplay&logoColor=white"/>
 
-> 개발 기간: 2022.07 ~ 2022.08 (2개월)
+> 개발 기간: 2022.07 ~ 2022.08 (2개월)  
 > 개발 인원: 안드로이드 2명, 웹 프론트 5명, 벡엔드 3명
 
 - 한성대학교 소모임 POCS를 위한 Android 커뮤니티 앱
@@ -65,7 +65,7 @@ header:
 <a href="https://github.com/jja08111/HansungNotification"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-181717.svg?&style=for-the-badge&logo=GitHub&logoColor=white"/>
 <a href="https://play.google.com/store/apps/details?id=com.foundy.hansungnotification"><img alt="Playstore" src="https://img.shields.io/badge/Playstore-1d7c48.svg?&style=for-the-badge&logo=googleplay&logoColor=white"/>
 
-> 개발 기간: 2022.06 (2주)
+> 개발 기간: 2022.06 (2주)  
 > 개발 인원: 1명
 
 - 모바일에서 학교 공지사항을 빠르고 쉽게 볼 수 있는 Android 앱
@@ -78,7 +78,7 @@ header:
 
 <a href="https://play.google.com/store/apps/details?id=com.foundy.what_should_i_eat"><img alt="Playstore" src="https://img.shields.io/badge/Playstore-1d7c48.svg?&style=for-the-badge&logo=googleplay&logoColor=white"/>
 
-> 개발 기간: 2022.01 ~ 2022.02 (2개월)
+> 개발 기간: 2022.01 ~ 2022.02 (2개월)  
 > 개발 인원: 2명
 
 - 친구들과 모였을 때 식사 메뉴를 정하는데 낭비되는 시간이 아까워 만들게 된 Flutter 앱
@@ -95,7 +95,7 @@ header:
 
 <a href="https://play.google.com/store/apps/details?id=io.github.jja08111.good_night_app"><img alt="Playstore" src="https://img.shields.io/badge/Playstore-1d7c48.svg?&style=for-the-badge&logo=googleplay&logoColor=white"/>
 
-> 개발 기간: 2020.12 ~ 2021.03 (4개월) + 유지보수 4개월
+> 개발 기간: 2020.12 ~ 2021.03 (4개월) + 유지보수 4개월  
 > 개발 인원: 1명
 
 - 수면 알람을 이용하여 규칙적인 수면 습관 형성을 도와주는 Flutter 앱
