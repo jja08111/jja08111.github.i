@@ -1,5 +1,5 @@
 ---
- title: "Google korea internship 지원 후기"
+ title: "Google Korea Internship 지원 후기"
  date: 2023-04-19 22:12:00 +0900
  categories: interview
  tags:
