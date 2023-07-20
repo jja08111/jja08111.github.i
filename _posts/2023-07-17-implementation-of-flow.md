@@ -143,6 +143,11 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 2. `suspendCancellableCoroutine`를 이용하여 `Continuation`을 `Slot`에 저장하여 await
 3. `SharedFlow.emit`을 호출하면 `Slot`에 저장된 `Continuation`을 `resume`하여 `collect`를 호출할 때 전달한 람다 함수(실제로는 `FlowCollect.emit`)이 호출됨
 
+또한 slot들과 buffer들을 가지고 있다.
+
+- Slot: 구독자들이 중단되어 잠시 대기하는 경우 이 슬롯에 저장된다.
+- Buffer: 방출된 값들이 replayCache 등의 속성을 위해 잠시 기록된다.
+
 자 이제 SharedFlow를 파헤쳐보자! `SharedFlow`를 만드는 방법은 크게 아래의 두 가지가 존재한다.
 
 - `MutableSharedFlow`를 만들어 사용하기
@@ -280,7 +285,7 @@ override suspend fun emit(value: T) {
 }
 ```
 
-`tryEmitLocked`를 호출는데 여기서는 `replayCache`, `extraBufferSize` 그리고 현재 버퍼 크기, 대기 큐에 있는 값들 등을 고려하여 방출을 시도한다.
+`tryEmit` 함수는 `tryEmitLocked`를 호출는데 여기서는 `replayCache`, `extraBufferSize` 그리고 현재 버퍼 크기, 대기 큐에 있는 값들 등을 고려하여 방출을 시도한다.
 만약 방출에 성공한다면 `findSlotsToResumeLocked`를 호출하여 앞서 설명한 재개될 `Slot`들을 가져온다. 그리고 `resume`을 통해 값이 실제로 방출된다.
 
 ```kotlin
@@ -356,8 +361,157 @@ private fun tryTakeValue(slot: SharedFlowSlot): Any? {
 
 # StateFlow
 
-TODO
+마지막으로 `StateFlow`이다. `StateFlow`는 `SharedFlow` 보다 단순하게 동작하며, 초기값이 존재하고 중복되는 값으로 상태를 수정하면 방출되지 않는다. 상태가 변경된 경우 값이 방출된다.
 
-# 결론
+```kotlin
+val stateFlow = MutableStateFlow(1)
+launch {
+    stateFlow.collect {
+        println(it)
+    }
+}
+repeat(4) {
+    delay(100)
+    stateFlow.update { it + 1 }
+}
 
-TODO
+// 1
+// 2
+// 3
+// 4
+// 5
+```
+
+```kotlin
+public fun <T> MutableStateFlow(value: T): MutableStateFlow<T> = StateFlowImpl(value ?: NULL)
+```
+
+`StateFlowImpl`을 살펴보기 전에 `StateFlow`, `MutableStateFlow` 인터페이스를 확인해보자.
+현재 상태인 value를 가지고 있고 `MutableStateFlow`의 경우 상태 쓰기를 허용한다.
+또한 원자적으로 상태값을 갱신하기 위한 `compareAndSet` 함수가 정의되어있다.
+
+```kotlin
+interface StateFlow<out T> : SharedFlow<T> {
+    val value: T
+}
+
+interface MutableStateFlow<T> : StateFlow<T>, MutableSharedFlow<T> {
+
+    override var value: T
+
+    fun compareAndSet(expect: T, update: T): Boolean
+}
+```
+
+이제 `StateFlowImpl`의 `collect` 함수를 살펴보자.
+`oldState`가 `null`이라는 뜻은 아직 아무것도 방출되지 않음을 나타내고 있다.
+계속해서 반복문을 돌면서 이전 상태와 새로운 상태가 다른지 비교하고 다르다면 값을 방출한다.
+그 후 await가 필요한 경우 Slot을 await 한다.
+
+```kotlin
+override suspend fun collect(collector: FlowCollector<T>): Nothing {
+    val slot = allocateSlot()
+    try {
+        if (collector is SubscribedFlowCollector) collector.onSubscription()
+        val collectorJob = currentCoroutineContext()[Job]
+        var oldState: Any? = null // previously emitted T!! | NULL (null -- nothing emitted yet)
+        // The loop is arranged so that it starts delivering current value without waiting first
+        while (true) {
+            // Here the coroutine could have waited for a while to be dispatched,
+            // so we use the most recent state here to ensure the best possible conflation of stale values
+            val newState = _state.value
+            // always check for cancellation
+            collectorJob?.ensureActive()
+            // Conflate value emissions using equality
+            if (oldState == null || oldState != newState) {
+                collector.emit(NULL.unbox(newState))
+                oldState = newState
+            }
+            // Note: if awaitPending is cancelled, then it bails out of this loop and calls freeSlot
+            if (!slot.takePending()) { // try fast-path without suspending first
+                slot.awaitPending() // only suspend for new values when needed
+            }
+        }
+    } finally {
+        freeSlot(slot)
+    }
+}
+```
+
+값을 새로 갱신하는 경우 아래의 `updateState` 함수가 호출된다.
+
+```kotlin
+override var value: T
+    get() = NULL.unbox(_state.value)
+    set(value) { updateState(null, value ?: NULL) }
+```
+
+`updateState` 함수는 CAS(Compare And Swap) 알고리즘을 이용하여 `oldState`와 `expectedState`가 일치하지 않는 경우 함수를 종료한다. 그리고 갱신할 값과 이전 값이 같은 경우 또한 함수를 종료한다.
+그리고 상태를 새로운 값으로 갱신한다.
+
+이 함수에서는 `sequence`를 이용하여 serializes updates를 구현한다. `sequence`가 홀수이면 업데이트가 진행중 인것이고, 짝수이면 업데이트중이 아니다. 이 부분은 무엇을 위한 것인지 더 공부해봐야겠다.(아시는 분 댓글 부탁드립니다.)
+
+```kotlin
+private fun updateState(expectedState: Any?, newState: Any): Boolean {
+    var curSequence = 0
+    var curSlots: Array<StateFlowSlot?>? = this.slots // benign race, we will not use it
+    synchronized(this) {
+        val oldState = _state.value
+        if (expectedState != null && oldState != expectedState) return false // CAS support
+        if (oldState == newState) return true // Don't do anything if value is not changing, but CAS -> true
+        _state.value = newState
+        curSequence = sequence
+        if (curSequence and 1 == 0) { // even sequence means quiescent state flow (no ongoing update)
+            curSequence++ // make it odd
+            sequence = curSequence
+        } else {
+            // update is already in process, notify it, and return
+            sequence = curSequence + 2 // change sequence to notify, keep it odd
+            return true // updated
+        }
+        curSlots = slots // read current reference to collectors under lock
+    }
+
+    // ...
+}
+```
+
+그리고 난 후 현재 슬롯들 모두 `makePending`을 호출하여 await 중인 코루틴을 재개한다.
+
+`Unconfined Coroutine`으로 발생할 수 있는 데드락을 피하기 위해 lock 바깥에서 아래의 코드를 실행한다고 한다.
+lock 안에서 `makePending`을 호출하면 왜 데드락이 발생하는지, 아래의 코드가 어떻게 데드락을 막을 수 있는지 잘 모르겠다...(아시는 분 댓글 부탁드립니다.)
+
+```kotlin
+private fun updateState(expectedState: Any?, newState: Any): Boolean {
+    // ...
+
+    /*
+        Fire value updates outside of the lock to avoid deadlocks with unconfined coroutines.
+        Loop until we're done firing all the changes. This is a sort of simple flat combining that
+        ensures sequential firing of concurrent updates and avoids the storm of collector resumes
+        when updates happen concurrently from many threads.
+    */
+    while (true) {
+        // Benign race on element read from array
+        curSlots?.forEach {
+            it?.makePending()
+        }
+        // check if the value was updated again while we were updating the old one
+        synchronized(this) {
+            if (sequence == curSequence) { // nothing changed, we are done
+                sequence = curSequence + 1 // make sequence even again
+                return true // done, updated
+            }
+            // reread everything for the next loop under the lock
+            curSequence = sequence
+            curSlots = slots
+        }
+    }
+}
+```
+
+# 배운점
+
+- Cold Stream과 Hot Stream이 내부적으로 어떻게 달리 동작하는지 알게되었다.
+- Hot Stream은 내부적으로 slot과 `suspendCancellableCoroutine`을 적극 활용하여 동작한다.
+- Flow는 [LiveData](https://jja08111.github.io/android/live-data-observer-pattern.md/)와 달리 코루틴의 특성을 잘 활용하여 구현했다.
