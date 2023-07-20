@@ -139,8 +139,8 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 
 이번에는 Hot Stream인 `SharedFlow`를 파헤치기 앞서서, 전체적인 동작 과정을 설명해보겠다.
 
-- Slot: 구독자들이 중단되어 잠시 대기하는 경우 이 슬롯에 `Continuation`이 저장된다.
-- Buffer: 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 기록된다.
+- Slot: 구독자가 중단되어 새로운 값을 대기하는 `Continuation`과 방출될 값의 인덱스를 저장한다.
+- Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 저장되는 곳이다.
 
 **구독자**
 
