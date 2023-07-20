@@ -17,6 +17,8 @@ docs:
     children:
       - title: "Android"
         url: /tags/#android
+      - title: "Kotlin"
+        url: /tags/#kotlin
       - title: "Flutter"
         url: /tags/#flutter
   - title: "Algorithm"
