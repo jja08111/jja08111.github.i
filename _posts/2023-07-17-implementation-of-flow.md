@@ -139,14 +139,21 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 
 이번에는 Hot Stream인 `SharedFlow`를 파헤치기 앞서서, 전체적인 동작 과정을 설명해보겠다.
 
-1. `SharedFlow.collect` 함수 호출
-2. `suspendCancellableCoroutine`를 이용하여 `Continuation`을 `Slot`에 저장하여 await
-3. 다른 코루틴에서 `SharedFlow.emit`을 호출하면 `Slot`에 저장된 `Continuation`을 `resume`하여 `collect`를 호출할 때 전달한 람다 함수(실제로는 `FlowCollect.emit`)이 호출됨
+**구독자**
 
-또한 slot들과 buffer들을 가지고 있다.
+1. `FlowCollector`를 인자로 넘기며 `SharedFlow.collect` 함수 호출
+2. `Slot`을 할당받음
+3. 새로 방출된 값이 존재한다면 `FlowCollector.emit` 호출, 방출된 값이 없다면 `suspendCancellableCoroutine`를 호출하여 `Continuation`을 `Slot`에 저장하고 await
+4. 3을 계속 반복하다가 예외 발생시 할당 받은 `Slot`을 해제
+
+**생성자**
+
+1. `SharedFlow.emit`을 호출
+2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣음
+3. 값을 방출할 때 대기 큐에 있는 `Emitter`를 `resume`
 
 - Slot: 구독자들이 중단되어 잠시 대기하는 경우 이 슬롯에 `Continuation`이 저장된다.
-- Buffer: 방출된 값들이 replayCache 등의 속성을 위해 잠시 기록된다.
+- Buffer: 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 기록된다.
 
 자 이제 SharedFlow를 파헤쳐보자! `SharedFlow`를 만드는 방법은 크게 아래의 두 가지가 존재한다.
 
