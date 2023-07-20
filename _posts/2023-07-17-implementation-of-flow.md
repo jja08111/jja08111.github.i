@@ -139,6 +139,9 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 
 이번에는 Hot Stream인 `SharedFlow`를 파헤치기 앞서서, 전체적인 동작 과정을 설명해보겠다.
 
+- Slot: 구독자들이 중단되어 잠시 대기하는 경우 이 슬롯에 `Continuation`이 저장된다.
+- Buffer: 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 기록된다.
+
 **구독자**
 
 1. `FlowCollector`를 인자로 넘기며 `SharedFlow.collect` 함수 호출
@@ -151,9 +154,6 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 1. `SharedFlow.emit`을 호출
 2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣음
 3. 값을 방출할 때 대기 큐에 있는 `Emitter`를 `resume`
-
-- Slot: 구독자들이 중단되어 잠시 대기하는 경우 이 슬롯에 `Continuation`이 저장된다.
-- Buffer: 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 기록된다.
 
 자 이제 SharedFlow를 파헤쳐보자! `SharedFlow`를 만드는 방법은 크게 아래의 두 가지가 존재한다.
 
