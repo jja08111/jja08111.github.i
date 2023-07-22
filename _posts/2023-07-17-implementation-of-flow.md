@@ -139,20 +139,22 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 
 이번에는 Hot Stream인 `SharedFlow`를 파헤치기 앞서서, 전체적인 동작 과정을 설명해보겠다.
 
-- Slot: 구독자가 중단되어 새로운 값을 대기하는 `Continuation`과 방출될 값의 인덱스를 저장한다.
-- Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 혹은 replayCache 등의 속성을 위해 저장되는 곳이다.
+![shared_flow](https://github.com/jja08111/korbit-android/assets/57604817/24cb2968-f278-4d50-a7e4-9d6b59f80e28)
 
-**구독자**
+- Slot: 구독자를 위해 할당하는 공간. collect가 중단되어 새로운 값을 대기하는 `Continuation`과 방출될 값의 버퍼 인덱스 등을 저장한다.
+- Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 저장되는 곳이다. 또한 Emitter가 중단될 때도 이곳에 저장된다.
+
+**Collector**
 
 1. `FlowCollector`를 인자로 넘기며 `SharedFlow.collect` 함수 호출
 2. `Slot`을 할당받음
 3. 새로 방출된 값이 존재한다면 `FlowCollector.emit` 호출, 방출된 값이 없다면 `suspendCancellableCoroutine`를 호출하여 `Continuation`을 `Slot`에 저장하고 await
 4. 3을 계속 반복하다가 예외 발생시 할당 받은 `Slot`을 해제
 
-**생성자**
+**Provider**
 
 1. `SharedFlow.emit`을 호출
-2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣음
+2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣거나 버퍼 값 중 하나를 drop
 3. 값을 방출할 때 대기 큐에 있는 `Emitter`를 `resume`
 
 자 이제 SharedFlow를 파헤쳐보자! `SharedFlow`를 만드는 방법은 크게 아래의 두 가지가 존재한다.
