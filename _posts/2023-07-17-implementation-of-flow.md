@@ -141,8 +141,8 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 
 ![shared_flow](/assets/images/shared_flow.png)
 
+- Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 저장되는 곳이다. 또한 Emitter가 일시중단될 때도 이곳에 저장된다.
 - Slot: 구독자를 위해 할당하는 공간. collect가 중단되어 새로운 값을 대기하는 `Continuation`과 방출될 값의 버퍼 인덱스 등을 저장한다.
-- Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 저장되는 곳이다. 또한 Emitter가 중단될 때도 이곳에 저장된다.
 
 **Collector**
 
