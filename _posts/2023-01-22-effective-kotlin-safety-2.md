@@ -126,7 +126,7 @@ val primes: Sequence<Int> = sequence {
 
 ```kotlin
 print(primes.take(10).toList())
-// [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+// [2, 3, 5, 6, 7, 8, 9, 10, 11, 12]
 ```
 
 이유는 prime이라는 변수를 filter에 전달한 람다에서 캡쳐했기 때문이다. 시퀀스는 앞서 말했듯이 필터링이 지연된다.
