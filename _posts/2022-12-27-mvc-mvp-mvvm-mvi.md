@@ -11,11 +11,11 @@ tags:
 
 # MVC
 
-MVC는 Model, View, Control로 구성된다.
+MVC는 Model, View, Controller로 구성된다.
 
 - Model: 데이터를 가진다.
-- View: 사용자 인터페이스를 담당한다.
-- Control: 사용자에게 입력을 받아 이를 Model에 의해 View를 정의한다.
+- View: 사용자 인터페이스를 담당한다. 사용자에게 입력을 받아 Controller에 전달한다.
+- Controller: 전달 받은 입력을 통해 Model과 상호작용하고 View를 갱신한다.
 
 의존성은 아래와 같다. View와 Controller가 강하게 결합되어 Controller를 테스트하기란 쉽지 않다.
 
@@ -23,12 +23,12 @@ MVC는 Model, View, Control로 구성된다.
 
 흐름은 다음과 같다.
 
-1. Control측에 사용자 이벤트가 발생한다.
-2. 데이터 업데이트가 필요한지 Control이 Model에게서 확인한다. 있다면 Model로부터 데이터를 업데이트한다.
-3. View는 Model 혹은 Control으로부터 갱신 필요 여부 이벤트를 받는다.
+1. Controller 측에 사용자 이벤트가 발생한다.
+2. 데이터 업데이트가 필요한지 Controller가 Model에게서 확인한다. 있다면 Model로부터 데이터를 업데이트한다.
+3. View는 Model 혹은 Controller로부터 갱신 필요 여부 이벤트를 받는다.
 4. Model에서 데이터를 받아와 View를 갱신한다.
 
-그런데 Android에서는 Activity나 Fragment들이 View와 Control 모두 가지고 있다.
+그런데 Android에서는 Activity나 Fragment들이 View와 Controller 모두 가지고 있다.
 예를 들면 아래와 같은 코드이다.
 
 ```kotlin
