@@ -159,6 +159,6 @@ data class SnackCollection(
 
 # 참조
 
-- https://developer.android.com/jetpack/compose/performance/stability
-- https://developer.android.com/jetpack/compose/performance/stability/diagnose
-- https://developer.android.com/jetpack/compose/performance/stability/fix
+- [https://developer.android.com/jetpack/compose/performance/stability](https://developer.android.com/jetpack/compose/performance/stability)
+- [https://developer.android.com/jetpack/compose/performance/stability/diagnose](https://developer.android.com/jetpack/compose/performance/stability/diagnose)
+- [https://developer.android.com/jetpack/compose/performance/stability/fix](https://developer.android.com/jetpack/compose/performance/stability/fix)
