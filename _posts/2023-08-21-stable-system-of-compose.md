@@ -110,6 +110,18 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 data class는 자동 생성된 `equals`에서 인스턴스 동일성 비교를 수행하고나서 값이 같은지 동등성 비교를 수행한다.
 두 인스턴스가 동일하기 때문에 리컴포지션은 생략된다.
 
+이는 아래와 같이 `mutableStateOf`를 사용하여 `Person`을 안정적으로 만들어 해결할 수 있다.
+
+```kotlin
+@Stable
+class Person(
+    name: String,
+    val address: String,
+) {
+    var name: String by mutableStateOf(name)
+}
+```
+
 # 성능 문제가 발생했을 때 디버깅하는 법
 
 먼저 어디서 리컴포지션이 빈번하게 발생하는지 확인해야 한다. 이는 [Layout Inspector](https://developer.android.com/jetpack/compose/tooling/layout-inspector)를 이용하면 된다.
