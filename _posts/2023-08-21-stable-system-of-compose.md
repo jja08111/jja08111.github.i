@@ -144,7 +144,7 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 위의 예제 코드를 보면 스위치를 토글하였을 때 `PersonDetail`는 리컴포지션이 발생하지 않는다. 하지만 `@Immutable`을 제거하면 리컴포지션이 발생한다.
 그 이유는 `MutableList`가 `List`를 구현해서 `List`는 unstable하기 때문이다.
 
-> For example, you could write val set: Set<String> = mutableSetOf("foo"). The variable is constant and its declared type is not mutable, but its implementation is still mutable. The Compose compiler cannot be sure of the immutability of this class as it only sees the declared type. It therefore marks tags as unstable.
+> For example, you could write `val set: Set<String> = mutableSetOf("foo")`. The variable is constant and its declared type is not mutable, but its implementation is still mutable. The Compose compiler cannot be sure of the immutability of this class as it only sees the declared type. It therefore marks tags as unstable.
 
 **위 예제는 "`@Stable`, `@Immutable`을 잘못 사용하면?"처럼 문제가 있기 때문에 사용에 주의할 필요가 있다.**
 
