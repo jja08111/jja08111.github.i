@@ -108,7 +108,7 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 캐시된 `Person` 인스턴스와 매개변수로 넘어온 `Person` 인스턴스를 가지고 `equals`를 수행한다.
 왜냐하면 `Person`을 stable로 마킹했기 때문이다. unstable이었다면 비교를 수행하지 않고 리컴포지션을 진행한다.
 data class는 자동 생성된 `equals`에서 인스턴스 동일성 비교를 수행하고나서 값이 같은지 동등성 비교를 수행한다.
-인스턴스가 동일하기 때문에 캐시된 항목을 이용하여 리컴포지션은 생략된다.
+두 인스턴스가 동일하기 때문에 리컴포지션은 생략된다.
 
 # 성능 문제가 발생했을 때 디버깅하는 법
 
