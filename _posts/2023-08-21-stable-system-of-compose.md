@@ -169,6 +169,11 @@ class Bar(private val greeting: String) : Function0<Unit> {
 아래처럼 안정적이지 않은 값을 캡쳐하는 람다 함수의 경우는 안정성 3번 조건을 만족하지 않기 때문에 unstable하다.
 
 ```kotlin
+// 컴파일 전
+val list = listOf("hi")
+val bar = { list.forEach { println(it) } }
+
+// 컴파일 후
 class Bar(private val list: List<String>) : Function0<Unit> {
     override operator fun invoke() {
         // ...
