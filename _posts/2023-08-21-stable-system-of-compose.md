@@ -66,9 +66,9 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 
 # `@Stable`, `@Immutable`을 잘못 사용하면?
 
-이 두 어노테이션은 주의해서 사용해야한다. 리컴포지션이 발생해야하는 시점에서 누락되는 문제가 발생할 수 있기 때문이다.
+두 어노테이션은 주의해서 사용해야한다. 리컴포지션이 발생해야하는 시점에서 누락되는 문제가 발생할 수 있기 때문이다.
 
-예를 들어 아래의 경우를 살펴보자.
+예를 들어 stable이 아닌 `Person` 객체에 `@Stable`을 사용한 아래의 경우를 살펴보자.
 
 ```kotlin
 @Stable
