@@ -122,6 +122,70 @@ class Person(
 }
 ```
 
+# 람다 함수
+
+람다 함수는 다음으로 나눠진다.
+
+- 값을 캡쳐하지 않는 람다 함수
+- 안정적인 값을 캡쳐하는 람다 함수
+- 안정적이지 않은 값을 캡쳐하는 람다 함수
+
+값을 캡쳐하지 않는 람다 함수의 경우는 아래와 같다.
+
+```kotlin
+val foo = { println("bye, world!") }
+```
+
+이는 컴파일 후 아래와 같이 싱글톤으로 만들어진다. 아래의 싱글톤 클래스는 안정성 조건을 모두 만족하므로 stable하다.
+
+```kotlin
+class Foo : Function0<Unit> {
+    override operator fun invoke() {
+        println("bye, world!")
+    }
+}
+
+val fooInstance = Foo()
+```
+
+안정적인 값을 캡쳐하는 람다 함수의 경우는 아래와 같다.
+
+```kotlin
+val greeting = "Hello"
+val bar = { println("$greeting world!") }
+```
+
+이는 컴파일 후 아래와 같은 클래스로 변형된다. 안정성 조건을 모두 만족하므로 stable하다.
+싱글톤이 아닌 경우 컴포즈 컴파일러에 의해 `remember`를 이용하여 항상 인스턴스를 생성하지 않도록 최적화된다.
+
+```kotlin
+class Bar(private val greeting: String) : Function0<Unit> {
+    override operator fun invoke() {
+        println("$greeting world!")
+    }
+}
+```
+
+아래처럼 안정적이지 않은 값을 캡쳐하는 람다 함수의 경우는 안정성 3번 조건을 만족하지 않기 때문에 unstable하다.
+
+```kotlin
+class Bar(private val list: List<String>) : Function0<Unit> {
+    override operator fun invoke() {
+        // ...
+    }
+}
+```
+
+그런데 아래와 같이 안정적이지 않은 클래스의 함수 레퍼런스를 사용하는 경우는 함수 레퍼런스가 안정적으로 취급되기 때문에 리컴포지션을 막을 수 있다.
+그 이유는 정확하지는 않지만 함수 레퍼런스는 리플랙션을 이용하여 고정된 함수 위치를 반환하기 때문이 아닐까 추측한다.
+
+```kotlin
+@Composable
+fun Content(unstableClass: UnstableClass) {
+    LambdaComposable(unstableClass::doSomthing)
+}
+```
+
 # 성능 문제가 발생했을 때 디버깅하는 법
 
 먼저 어디서 리컴포지션이 빈번하게 발생하는지 확인해야 한다. 이는 [Layout Inspector](https://developer.android.com/jetpack/compose/tooling/layout-inspector)를 이용하면 된다.
@@ -174,3 +238,4 @@ data class SnackCollection(
 - [https://developer.android.com/jetpack/compose/performance/stability](https://developer.android.com/jetpack/compose/performance/stability)
 - [https://developer.android.com/jetpack/compose/performance/stability/diagnose](https://developer.android.com/jetpack/compose/performance/stability/diagnose)
 - [https://developer.android.com/jetpack/compose/performance/stability/fix](https://developer.android.com/jetpack/compose/performance/stability/fix)
+- [https://sungbin.land/jetpack-compose-람다-최적화에-대한-고찰-b8854e38067a](https://sungbin.land/jetpack-compose-람다-최적화에-대한-고찰-b8854e38067a)
