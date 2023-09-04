@@ -128,7 +128,7 @@ header:
 
 ## Certifications
 
-- SAMSUNG SDS SW Certificate Professional ( 2022.01.20 )
+- SAMSUNG SDS SW Certificate Professional ( 2023.01.20 )
 
 ## Activity
 
