@@ -45,7 +45,7 @@ fun PersonDetail(person: Person) {
 }
 ```
 
-그리고 아래와 같이 `person`이 변경되지 않는 경우에도 `checked`가 변경될 때마다 항상 리컴포지션이 발생한다.
+그리고 아래와 같이 `person`이 변경되지 않는 경우에도 `checked`가 변경될 때마다 항상 `PersonDetail` 컴포저블에서 리컴포지션이 발생한다.
 
 ```kotlin
 @Composable
