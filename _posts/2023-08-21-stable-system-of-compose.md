@@ -104,7 +104,7 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 `PersonDetail`은 `Person`을 매개변수로 받지만 리컴포지션이 생략된다.
 그 이유는 unstable한 `Person` 객체에 `@Stable`을 사용했기 때문이다.
 
-더 자사히 설명해보겠다.
+더 자세히 설명해보겠다.
 캐시된 `Person` 인스턴스와 매개변수로 넘어온 `Person` 인스턴스를 가지고 `equals`를 수행한다.
 왜냐하면 `Person`을 stable로 마킹했기 때문이다. unstable이었다면 비교를 수행하지 않고 리컴포지션을 진행한다.
 data class는 자동 생성된 `equals`에서 인스턴스 동일성 비교를 수행하고나서 값이 같은지 동등성 비교를 수행한다.
