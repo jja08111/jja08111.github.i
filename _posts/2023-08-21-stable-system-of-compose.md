@@ -59,7 +59,7 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 }
 ```
 
-궁금한점이 생겼다. 메모이제이션된 `PersonDetail` 객체로 equals를 수행하면 항상 동일한 값이 나오기 때문에 재사용해도 문제가 없지 않나?
+궁금한점이 생겼다. 메모이제이션된 `Person` 객체로 equals를 수행하면 항상 동일한 값이 나오기 때문에 재사용해도 문제가 없지 않나?
 그렇다면 왜 이를 unstable로 취급할까? 이는 잘못된 어노테이션 사용 항목에서 설명된다.
 
 세 번째 항목은 공개 프로퍼티 중 하나라도 unstable하다면 두 인스턴스의 동등성을 보장할 수 없기 때문에 필요하다.
@@ -101,16 +101,14 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 
 스위치를 누르면 `checked` 값이 갱신되고 `person`의 `name`은 `wow`가 된다.
 이때 State 값인 `checked`가 갱신되었기 때문에 리컴포지션이 발생된다.
-`PersonDetail`은 `Person`을 매개변수로 받지만 리컴포지션이 생략된다.
-그 이유는 unstable한 `Person` 객체에 `@Stable`을 사용했기 때문이다.
 
-더 자세히 설명해보겠다.
-캐시된 `Person` 인스턴스와 매개변수로 넘어온 `Person` 인스턴스를 가지고 `equals`를 수행한다.
-왜냐하면 `Person`을 stable로 마킹했기 때문이다. unstable이었다면 비교를 수행하지 않고 리컴포지션을 진행한다.
-data class는 자동 생성된 `equals`에서 인스턴스 동일성 비교를 수행하고나서 값이 같은지 동등성 비교를 수행한다.
-두 인스턴스가 동일하기 때문에 리컴포지션은 생략된다.
+하지만 `Person`의 `name`이 변경되었음에도 UI에는 변경된 `name`이 표시되지 않는다.
+그 이유는 `Person` 객체가 `@Stable`로 마킹되었으나, equals를 동일한 인스턴스로 수행했기 때문이다. 실제로 equals를 오버라이딩하여 출력하면 동일한 `name`을 갖고 있다.(의문이 드는 부분은 equals를 항상 false만 반환하도록 오버라이딩 하여도 바뀐 `name`이 UI에 보이지 않는다... 왜일까? equals 말고도 다른 연산이 수행되나? hashCode로 비교를 수행하나?)
 
 이는 아래와 같이 `mutableStateOf`를 사용하여 `Person`을 안정적으로 만들어 해결할 수 있다.
+`name` 자체를 관찰 가능한 값으로 만들어 Text에서 변경을 알아 낼 수 있도록 하는 것이다. 하지만 이보다 immutable한 `data class`를 사용하는 것이 바람직하다.
+
+_(2023/12/11 내용 수정됨)_
 
 ```kotlin
 @Stable
