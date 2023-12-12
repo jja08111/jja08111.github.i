@@ -102,11 +102,11 @@ fun PersonDetailRow(person: Person, modifier: Modifier = Modifier) {
 스위치를 누르면 `checked` 값이 갱신되고 `person`의 `name`은 `wow`가 된다.
 이때 State 값인 `checked`가 갱신되었기 때문에 리컴포지션이 발생된다.
 
-하지만 `Person`의 `name`이 변경되었음에도 UI에는 변경된 `name`이 표시되지 않는다.
-그 이유는 `Person` 객체가 `@Stable`로 마킹되었으나, equals를 동일한 인스턴스로 수행했기 때문이다. 실제로 equals를 오버라이딩하여 출력하면 동일한 `name`을 갖고 있다.(의문이 드는 부분은 equals를 항상 false만 반환하도록 오버라이딩 하여도 바뀐 `name`이 UI에 보이지 않는다... 왜일까? equals 말고도 다른 연산이 수행되나? hashCode로 비교를 수행하나?)
+하지만 `Person`의 `name`이 변경되었음에도 UI에는 변경된 `name`이 표시되지 않는다. LayoutInspector를 살펴보면 `PersonDetail`은 리컴포지션이 생략된 것을 볼 수 있다.
+그 이유는 `Person` 객체가 `@Stable`로 마킹되었으나, equals를 동일한 인스턴스로 수행했기 때문이다. 실제로 equals를 오버라이딩하여 출력하면 동일한 `name`을 갖고 있다.(의문이 드는 부분은 equals를 항상 false만 반환하도록 오버라이딩 하여도 바뀐 `name`이 UI에 보이지 않는다... 왜일까? equals 말고도 다른 연산이 수행되나? hashCode로 비교를 수행하나? 내부를 더 확인해봐야겠다)
 
 이는 아래와 같이 `mutableStateOf`를 사용하여 `Person`을 안정적으로 만들어 해결할 수 있다.
-`name` 자체를 관찰 가능한 값으로 만들어 Text에서 변경을 알아 낼 수 있도록 하는 것이다. 하지만 이보다 immutable한 `data class`를 사용하는 것이 바람직하다.
+`name` 자체를 관찰 가능한 값으로 만들어 Text에서 변경을 알아 낼 수 있도록 하는 것이다.
 
 _(2023/12/11 내용 수정됨)_
 
