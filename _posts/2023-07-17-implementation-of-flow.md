@@ -142,7 +142,7 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 ![shared_flow](/assets/images/shared_flow.png)
 
 - Buffer: 생성자에 의해 방출된 값들이 구독자들에게 읽히기 위해 저장되는 곳이다. 또한 Emitter가 일시중단될 때도 이곳에 저장된다.
-- Slot: 구독자를 위해 할당하는 공간. collect가 중단되어 새로운 값을 대기하는 `Continuation`과 방출될 값의 버퍼 인덱스 등을 저장한다.
+- Slot: 구독자를 위해 할당하는 공간. collect가 중단되어 새로 방출되는 값을 대기하는 `Continuation`과, 방출될 값의 버퍼 인덱스 등을 저장한다.
 
 **Collector**
 
@@ -154,7 +154,7 @@ class SafeFlow<T>(private val block: suspend FlowCollector<T>.() -> Unit) : Abst
 **Provider**
 
 1. `SharedFlow.emit`을 호출
-2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣거나 버퍼 값 중 하나를 drop
+2. 곧바로 방출 가능한 경우 버퍼에 값을 쓰고 `Slot` 목록에 저장된 `Continuation`의 `resume`을 호출 or `Emitter`를 대기 큐에 넣음, 이때 버퍼 값 중 하나를 drop 할 수도 있음
 3. 값을 방출할 때 대기 큐에 있는 `Emitter`를 `resume`
 
 자 이제 SharedFlow를 파헤쳐보자! `SharedFlow`를 만드는 방법은 크게 아래의 두 가지가 존재한다.
@@ -267,7 +267,7 @@ override suspend fun collect(collector: FlowCollector<T>): Nothing {
 }
 ```
 
-`awaitValue` 함수를 살펴보자. `suspendCancellableCoroutine`를 이용했기 때문에 `continuation`을 전달하여 다른 코드에서 이 코루틴을 재개할 수 있도록 하였다.
+`awaitValue` 함수를 살펴보자. `suspendCancellableCoroutine`를 이용했기 때문에 `continuation`을 전달하여 외부 스코프에서 이 코루틴을 재개할 수 있도록 하였다.
 실제로 `slot.cont`는 `emit`을 호출할때 `resume`이 호출되어 재개된다.
 
 ```kotlin
@@ -285,7 +285,7 @@ private suspend fun awaitValue(slot: SharedFlowSlot): Unit = suspendCancellableC
 }
 ```
 
-그렇다면 이제는 `emit` 함수를 살펴보자. 중단 없는 방출을 시도해보고, 안된다면 중단 있이 방출을 시도한다.
+그렇다면 이제는 `emit` 함수를 살펴보자. 중단 없는 방출을 시도해보고, 안된다면 중단하며 방출을 시도한다.
 
 ```kotlin
 override suspend fun emit(value: T) {
