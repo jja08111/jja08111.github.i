@@ -1,6 +1,6 @@
 ---
- title: "Kotlin Coroutine"
- date: 2023-01-27 21:12:00 +0900
+ title: "[Kotlin] Coroutine"
+ date: 2024-02-20 21:12:00 +0900
  categories: kotlin
  tags:
    - kotlin
